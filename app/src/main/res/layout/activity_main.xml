@@ -20,6 +20,9 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:layout_alignParentBottom="true"
-        app:menu="@menu/nav_items"/>
+        android:background="@color/white"
+        app:itemTextColor="#8E24AA"
+        app:menu="@menu/nav_items"
+        app:labelVisibilityMode="labeled"/>
 
 </RelativeLayout>
