@@ -16,13 +16,14 @@
     </FrameLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:padding="@dimen/_3sdp"
         android:id="@+id/bnView"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:layout_alignParentBottom="true"
         android:background="@color/white"
-        app:itemTextColor="#8E24AA"
         app:menu="@menu/nav_items"
-        app:labelVisibilityMode="labeled"/>
+        app:labelVisibilityMode="labeled"
+        tools:ignore="PrivateResource"/>
 
 </RelativeLayout>

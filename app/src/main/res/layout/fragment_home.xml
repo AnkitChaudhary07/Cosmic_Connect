@@ -1,20 +1,143 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
-    android:padding="15dp"
+    android:paddingLeft="@dimen/_15sdp"
+    android:paddingRight="@dimen/_15sdp"
     tools:context=".HomeFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:textSize="32sp"
-        android:textStyle="bold"
-        android:gravity="center"
-        android:textColor="@color/white"
-        android:text="Home Frag..." />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.5">
 
-</FrameLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Date"
+                android:textSize="@dimen/_13sdp"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:gravity="center"/>
+
+            <SearchView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border"
+                android:layout_marginTop="@dimen/_50sdp"
+                android:queryHint="Enter Place"
+                android:textColorHint="@color/black">
+            </SearchView>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_25sdp"
+                android:src="@drawable/cosmic_ligths_premium"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_200sdp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_45sdp"
+                    android:layout_weight="1"
+                    android:text="Transit Remedies"
+                    android:layout_marginStart="-20dp"
+                    android:textSize="@dimen/_11ssp"
+                    android:paddingStart="@dimen/_25ssp"
+                    android:drawableLeft="@drawable/baseline_checklist_24"
+                    android:drawablePadding="@dimen/_2sdp"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:background="@drawable/border_home_buttons"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/border_home_buttons"
+                    android:drawableLeft="@drawable/baseline_alternate_email_24"
+                    android:gravity="center"
+                    android:paddingStart="@dimen/_25ssp"
+                    android:text="Transit News"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_12ssp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_250sdp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_50sdp"
+                    android:layout_weight="1"
+                    android:text="Go\nOffline"
+                    android:layout_marginStart="-20dp"
+                    android:textSize="@dimen/_12ssp"
+                    android:padding="@dimen/_2sdp"
+                    android:paddingStart="@dimen/_25ssp"
+                    android:drawableLeft="@drawable/baseline_cloud_off_24"
+                    android:drawablePadding="@dimen/_5sdp"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:background="@drawable/border_home_buttons"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_50sdp"
+                    android:layout_weight="1"
+                    android:background="@drawable/border_home_buttons"
+                    android:drawableLeft="@drawable/baseline_remove_red_eye_24"
+                    android:gravity="center"
+                    android:paddingStart="@dimen/_25ssp"
+                    android:text="Today at\na glance"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_11ssp"
+                    android:padding="@dimen/_4sdp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_50sdp"
+                    android:layout_weight="1"
+                    android:background="@drawable/border_home_buttons"
+                    android:drawableLeft="@drawable/baseline_question_mark_24"
+                    android:gravity="center"
+                    android:paddingStart="@dimen/_25ssp"
+                    android:text="Tips\nTricks"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_12ssp"
+                    android:padding="@dimen/_4sdp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+        </RelativeLayout>
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
