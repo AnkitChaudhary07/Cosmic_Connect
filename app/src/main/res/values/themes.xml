@@ -7,6 +7,6 @@
     </style>
 
     <style name="Theme.CosmicInsights" parent="Base.Theme.CosmicInsights">
-        <item name="android:statusBarColor">#FF514ABC</item>
+        <item name="android:statusBarColor">#6F368D</item>
     </style>
 </resources>

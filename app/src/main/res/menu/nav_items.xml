@@ -9,16 +9,16 @@
         android:title="Charts"
         android:icon="@drawable/charts"/>
 
-    <item android:id="@+id/nav_addOns"
-        android:title="Add-Ons"
-        android:icon="@drawable/add_ons"/>
+    <item android:id="@+id/nav_premium"
+        android:title="Premium"
+        android:icon="@drawable/premium"/>
 
-    <item android:id="@+id/nav_resources"
-        android:title="Resources"
-        android:icon="@drawable/resources"/>
+    <item android:id="@+id/nav_events"
+        android:title="Events"
+        android:icon="@drawable/events"/>
 
-    <item android:id="@+id/nav_more"
-        android:title="More"
-        android:icon="@drawable/more"/>
+    <item android:id="@+id/nav_profile"
+        android:title="Profile"
+        android:icon="@drawable/profile"/>
 
 </menu>

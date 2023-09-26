@@ -1,20 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ChartsFragment"
-    android:padding="15dp"
+    android:orientation="vertical"
     android:background="@drawable/background">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:textSize="32sp"
-        android:textStyle="bold"
-        android:gravity="center"
-        android:textColor="@color/white"
-        android:text="Charts Frag..." />
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="     Current Transit Chart"
+    android:textStyle="bold"
+    android:textSize="@dimen/_15ssp"
+    android:textColor="@color/white"
+    android:padding="@dimen/_10sdp"
+    android:background="@drawable/border_home_buttons"/>
 
-</FrameLayout>
+    <SearchView
+        android:id="@+id/search"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_30sdp"
+        android:background="@drawable/border"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:queryHint="Enter Place"
+        android:textColorHint="@color/black">
+    </SearchView>
+
+    <HorizontalScrollView
+        android:id="@+id/charts_scroll"
+        android:layout_width="match_parent"
+        android:padding="@dimen/_10sdp"
+        android:background="@drawable/rounded_border"
+        android:layout_height="@dimen/_100sdp"
+        android:layout_marginTop="@dimen/_15sdp"
+        tools:ignore="SpeakableTextPresentCheck">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/all_text"
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="@dimen/_50sdp"
+            android:text="All"
+            android:textColor="@color/white"
+            android:layout_gravity="center"
+            android:gravity="center_horizontal"
+            android:textSize="@dimen/_13sdp"
+            android:textStyle="bold"
+            android:drawableTop="@drawable/baseline_checklist_24"/>
+
+
+            <TextView
+                android:id="@+id/family_text"
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:text="Family"
+                android:textColor="@color/white"
+                android:layout_gravity="center"
+                android:gravity="center_horizontal"
+                android:textSize="@dimen/_13sdp"
+                android:textStyle="bold"
+                android:drawableTop="@drawable/baseline_heart_broken_24"/>
+
+            <TextView
+                android:id="@+id/friends_text"
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:text="Friends"
+                android:textColor="@color/white"
+                android:layout_gravity="center"
+                android:gravity="center_horizontal"
+                android:textSize="@dimen/_13sdp"
+                android:textStyle="bold"
+                android:drawableTop="@drawable/baseline_people_24"/>
+
+            <TextView
+                android:id="@+id/celebrity_text"
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:text="Celebrity"
+                android:textColor="@color/white"
+                android:layout_gravity="center"
+                android:gravity="center_horizontal"
+                android:textSize="@dimen/_13sdp"
+                android:textStyle="bold"
+                android:drawableTop="@drawable/baseline_star_purple500_24"/>
+
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/sub_charts"
+        android:layout_marginBottom="@dimen/_100sdp"/>
+
+
+
+</LinearLayout>

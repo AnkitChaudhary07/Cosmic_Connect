@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -19,6 +20,13 @@ BottomNavigationView bnView;
         setContentView(R.layout.activity_main);
 
         bnView = findViewById(R.id.bnView);
+        ColorStateList iconTintList = getResources().getColorStateList(R.color.bottom_nav_icon_tint);
+        bnView.setItemIconTintList(iconTintList);
+
+        bnView.setOnNavigationItemSelectedListener(item -> {
+            // Handle item selection here
+            return true;
+        });
 
         bnView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -30,13 +38,13 @@ BottomNavigationView bnView;
                 } else if (id == R.id.nav_charts) {
                     loadFrag(new ChartsFragment(), false);
 
-                } else if (id == R.id.nav_addOns) {
+                } else if (id == R.id.nav_premium) {
                     loadFrag(new Add_OnsFragment(), false);
 
-                } else if (id == R.id.nav_resources) {
+                } else if (id == R.id.nav_events) {
                     loadFrag(new ResourcesFragment(), false);
 
-                } else { //More
+                } else { //Profile
                     loadFrag(new MoreFragment(), true);
                 }
                 return true;

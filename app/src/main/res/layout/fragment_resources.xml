@@ -1,20 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ResourcesFragment"
     android:padding="15dp"
+    android:orientation="vertical"
     android:background="@drawable/background">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:id="@+id/addOns_heading"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:textSize="32sp"
-        android:textStyle="bold"
-        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:text="Resources"
+        android:textSize="@dimen/_20sdp"
         android:textColor="@color/white"
-        android:text="Resources Frag..."/>
+        android:layout_below="@+id/textView1"
+        android:textStyle="bold"/>
 
-</FrameLayout>
+    <HorizontalScrollView
+        android:id="@+id/resources_scroll"
+        android:layout_width="match_parent"
+        android:padding="@dimen/_10sdp"
+        android:background="@drawable/rounded_border"
+        android:layout_height="@dimen/_100sdp"
+        android:layout_marginTop="@dimen/_15sdp"
+        tools:ignore="SpeakableTextPresentCheck">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:text="Tips and Tricks"
+                android:textColor="@color/white"
+                android:layout_gravity="center"
+                android:gravity="center_horizontal"
+                android:textSize="@dimen/_13sdp"
+                android:textStyle="bold"
+                android:drawableTop="@drawable/baseline_tips_and_updates_24"/>
+
+
+            <TextView
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:text="Reports"
+                android:textColor="@color/white"
+                android:layout_gravity="center"
+                android:gravity="center_horizontal"
+                android:textSize="@dimen/_13sdp"
+                android:textStyle="bold"
+                android:drawableTop="@drawable/baseline_report_24"/>
+
+            <TextView
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:text="Events"
+                android:textColor="@color/white"
+                android:layout_gravity="center"
+                android:gravity="center_horizontal"
+                android:textSize="@dimen/_13sdp"
+                android:textStyle="bold"
+                android:drawableTop="@drawable/baseline_star_purple500_24"/>
+
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <TextView
+        android:id="@+id/featured_heading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:text="Featured"
+        android:textSize="@dimen/_20sdp"
+        android:textColor="@color/white"
+        android:layout_below="@+id/textView1"
+        android:textStyle="bold"/>
+
+    <HorizontalScrollView
+        android:id="@+id/featured_scroll"
+        android:layout_width="match_parent"
+        android:padding="@dimen/_10sdp"
+        android:layout_height="@dimen/_150sdp"
+        android:layout_marginTop="@dimen/_15sdp"
+        tools:ignore="SpeakableTextPresentCheck">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="150dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/_150sdp"
+                android:layout_height="@dimen/_120sdp"
+                android:src="@drawable/img"/>
+            <ImageView
+                android:layout_width="@dimen/_150sdp"
+                android:layout_height="@dimen/_120sdp"
+                android:src="@drawable/image"/>
+
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_200sdp"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:text="Tips and Tricks"
+            android:textSize="@dimen/_20sdp"
+            android:textColor="@color/black"
+            android:layout_below="@+id/textView1"
+            android:textStyle="bold"/>
+
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

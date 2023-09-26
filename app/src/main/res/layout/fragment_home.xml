@@ -1,143 +1,264 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
-    android:paddingLeft="@dimen/_15sdp"
-    android:paddingRight="@dimen/_15sdp"
+    android:background="#F1DDFC"
+    android:orientation="vertical"
     tools:context=".HomeFragment">
 
-    <ScrollView
+    <RelativeLayout
+        android:id="@+id/top_nav"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/scrollView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.5">
 
-
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:id="@+id/sub_nav"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/alarm"/>
+
+            <ImageView
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/menu"/>
 
             <TextView
                 android:id="@+id/date"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Date"
-                android:textSize="@dimen/_13sdp"
-                android:textStyle="bold"
-                android:textColor="@color/white"
-                android:gravity="center"/>
-
-            <SearchView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/border"
-                android:layout_marginTop="@dimen/_50sdp"
-                android:queryHint="Enter Place"
-                android:textColorHint="@color/black">
-            </SearchView>
-
-            <ImageView
+                android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_25sdp"
-                android:src="@drawable/cosmic_ligths_premium"/>
+                android:gravity="center"
+                android:text="Date"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_13sdp"
+                android:textStyle="bold" />
 
-            <LinearLayout
+            <ImageView
+                android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/calender"/>
+
+            <ImageView
+                android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/search"/>
+
+        </LinearLayout>
+
+        <SearchView
+            android:id="@+id/search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border"
+            android:layout_below="@+id/sub_nav"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:queryHint="Enter Place"
+            android:textColorHint="@color/black" />
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="@dimen/_10sdp"
+        android:paddingRight="@dimen/_10sdp"
+        app:layout_constraintBottom_toBottomOf="@+id/top_nav">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/addvertisement_image"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:src="@drawable/addvertisement" />
+
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_200sdp"
-                android:orientation="horizontal">
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:text="RECOMMENDED FOR YOU"
+                android:textStyle="bold"
+                android:textColor="#5A2B77"
+                android:gravity="center"/>
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="@dimen/_45sdp"
-                    android:layout_weight="1"
-                    android:text="Transit Remedies"
-                    android:layout_marginStart="-20dp"
-                    android:textSize="@dimen/_11ssp"
-                    android:paddingStart="@dimen/_25ssp"
-                    android:drawableLeft="@drawable/baseline_checklist_24"
-                    android:drawablePadding="@dimen/_2sdp"
-                    android:gravity="center"
-                    android:textColor="@color/white"
-                    android:textStyle="bold"
-                    android:background="@drawable/border_home_buttons"/>
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_below="@id/membership_heading"
+                android:layout_height="wrap_content"
+                tools:ignore="SpeakableTextPresentCheck">
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@drawable/border_home_buttons"
-                    android:drawableLeft="@drawable/baseline_alternate_email_24"
-                    android:gravity="center"
-                    android:paddingStart="@dimen/_25ssp"
-                    android:text="Transit News"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/_12ssp"
-                    android:textStyle="bold" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
-            </LinearLayout>
+                    <ImageView
+                        android:id="@+id/transit_remedies_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/transit_remedies_image" />
 
-            <LinearLayout
+                    <ImageView
+                        android:id="@+id/transit_news_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/transit_news_image" />
+
+                    <ImageView
+                        android:id="@+id/tips_tricks_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/tips_tricks_image" />
+
+                    <ImageView
+                        android:id="@+id/today_glance_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/today_glance_image" />
+
+                    <ImageView
+                        android:id="@+id/go_offline_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/go_offline_image" />
+                </LinearLayout>
+            </HorizontalScrollView>
+
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_250sdp"
-                android:orientation="horizontal">
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:text="All about Today"
+                android:textStyle="bold"
+                android:textColor="#5A2B77"
+                android:gravity="center"/>
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="@dimen/_50sdp"
-                    android:layout_weight="1"
-                    android:text="Go\nOffline"
-                    android:layout_marginStart="-20dp"
-                    android:textSize="@dimen/_12ssp"
-                    android:padding="@dimen/_2sdp"
-                    android:paddingStart="@dimen/_25ssp"
-                    android:drawableLeft="@drawable/baseline_cloud_off_24"
-                    android:drawablePadding="@dimen/_5sdp"
-                    android:gravity="center"
-                    android:textColor="@color/white"
-                    android:textStyle="bold"
-                    android:background="@drawable/border_home_buttons"/>
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_below="@id/membership_heading"
+                android:layout_height="wrap_content"
+                tools:ignore="SpeakableTextPresentCheck">
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="@dimen/_50sdp"
-                    android:layout_weight="1"
-                    android:background="@drawable/border_home_buttons"
-                    android:drawableLeft="@drawable/baseline_remove_red_eye_24"
-                    android:gravity="center"
-                    android:paddingStart="@dimen/_25ssp"
-                    android:text="Today at\na glance"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/_11ssp"
-                    android:padding="@dimen/_4sdp"
-                    android:textStyle="bold" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="@dimen/_50sdp"
-                    android:layout_weight="1"
-                    android:background="@drawable/border_home_buttons"
-                    android:drawableLeft="@drawable/baseline_question_mark_24"
-                    android:gravity="center"
-                    android:paddingStart="@dimen/_25ssp"
-                    android:text="Tips\nTricks"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/_12ssp"
-                    android:padding="@dimen/_4sdp"
-                    android:textStyle="bold" />
+                    <ImageView
+                        android:id="@+id/today_panchang_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/_5sdp"
+                        android:src="@drawable/today_panchang_image" />
 
-            </LinearLayout>
-        </RelativeLayout>
+                    <ImageView
+                        android:id="@+id/timing_for_today_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/_5sdp"
+                        android:src="@drawable/timing_for_today_image" />
+
+                    <ImageView
+                        android:id="@+id/glance_image2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/_5sdp"
+                        android:src="@drawable/glance_image" />
+
+                </LinearLayout>
+            </HorizontalScrollView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:text="Explore"
+                android:textStyle="bold"
+                android:textColor="#5A2B77"
+                android:gravity="center"/>
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_below="@id/membership_heading"
+                android:layout_height="wrap_content"
+
+                tools:ignore="SpeakableTextPresentCheck">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/advanced_panchang_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/_5sdp"
+                        android:src="@drawable/advanced_panchang_image" />
+
+                    <ImageView
+                        android:id="@+id/featured_tools_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/_5sdp"
+                        android:src="@drawable/featured_tools_image" />
+
+                    <ImageView
+                        android:id="@+id/nak_hora_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/_5sdp"
+                        android:src="@drawable/nak_hora_image" />
+
+                    <ImageView
+                        android:id="@+id/spl_events_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/_5sdp"
+                        android:src="@drawable/spl_events_image" />
+
+                    <ImageView
+                        android:id="@+id/tools_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/_5sdp"
+                        android:src="@drawable/tools_image" />
+
+                </LinearLayout>
+            </ScrollView>
+
+        </LinearLayout>
 
     </ScrollView>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

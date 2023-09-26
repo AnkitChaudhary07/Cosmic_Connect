@@ -16,7 +16,7 @@
     </FrameLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:padding="@dimen/_3sdp"
+        android:padding="@dimen/_1sdp"
         android:id="@+id/bnView"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"

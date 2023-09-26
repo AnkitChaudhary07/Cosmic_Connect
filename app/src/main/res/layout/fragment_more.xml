@@ -15,6 +15,6 @@
         android:textStyle="bold"
         android:gravity="center"
         android:textColor="@color/white"
-        android:text="More Frag..."/>
+        android:text="Sorry\nWorking on it.."/>
 
 </FrameLayout>
