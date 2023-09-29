@@ -1,5 +1,6 @@
 package com.example.cosmicinsights;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -34,13 +35,10 @@ import java.util.Locale;
 
 public class HomeFragment extends Fragment {
 
-    String url = "https://github.com/astrologyapireports/astrology-api-postman-client/blob/main/Postman_Collection.json";
-    ArrayList<Astrology_report> astrology_reports = new ArrayList<>();
-    private Astrology_report astrologyReport;
 
-    LinearLayout linearLayout1, linearLayout2;
+
     SearchView search;
-    ImageView addvertisement_image;
+    ImageView transit_remedies_image;
     ProgressBar progressBar;
     TextView date, textView;
 
@@ -62,42 +60,20 @@ public class HomeFragment extends Fragment {
         date.setText(currentDateAndTime);
 
         search = view.findViewById(R.id.search);
-        addvertisement_image = view.findViewById(R.id.addvertisement_image);
+        transit_remedies_image = view.findViewById(R.id.transit_remedies_image);
+
+        transit_remedies_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), TransitRemediesMain.class);
+                startActivity(intent);
+            }
+        });
 
         return view;
     }
 
-    private void fetchAstrologyReport() {
-        RequestQueue requestQueue = Volley.newRequestQueue(requireContext());
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
-                Request.Method.GET,
-                url,
-                null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        // Parse the JSON response and populate the astrologyReport object
-                        try {
-                            astrologyReport = parseJsonResponse(response);
-                        } catch (JSONException e) {throw new RuntimeException(e);
-
-                        }
-
-                        // Display the data in the textView
-                        display();
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                       // Toast.makeText(requireContext(), "Error Occured...", Toast.LENGTH_SHORT).show();
-                    }
-                }
-        );
-
-        requestQueue.add(jsonObjectRequest);
-    }
 
     private Astrology_report parseJsonResponse(JSONObject response) throws JSONException {
         Astrology_report astrologyReport = new Astrology_report();
@@ -109,16 +85,5 @@ public class HomeFragment extends Fragment {
         // For nested objects or arrays, you will need to implement the parsing logic accordingly
 
         return astrologyReport;
-    }
-
-    private void display() {
-        if (astrologyReport != null) {
-            // Display data in the textView
-            // Hide the ProgressBar
-            progressBar.setVisibility(View.GONE);
-            textView.setText((CharSequence) astrologyReport.getInfo());
-
-            // Replace with the actual properties you want to display from astrologyReport
-        }
     }
 }

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F1DDFC"
+    android:orientation="vertical"
+    tools:context=".TransitRemediesMain">
+
+    <TextView
+        android:id="@+id/action_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_12sdp"
+        android:text="  Transit Remedies"
+        android:drawableLeft="@drawable/back_arrow"
+        android:textStyle="bold"
+        android:textSize="@dimen/_15ssp"
+        android:textColor="#562A73"
+        android:background="@color/white"
+        android:paddingBottom="10dp" />
+
+    <ImageView
+        android:id="@+id/saturn_aquarious"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:src="@drawable/saturn_aquarious"/>
+
+    <ImageView
+        android:id="@+id/digital_asto_calender"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:src="@drawable/digital_asto_calender"/>
+
+    <ImageView
+        android:id="@+id/important_days"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:src="@drawable/important_days"/>
+
+</LinearLayout>

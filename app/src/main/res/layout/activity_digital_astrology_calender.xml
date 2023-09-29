@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#F1DDFC"
+    tools:context=".DigitalAstrologyCalenderActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_25sdp"
+        android:gravity="center"
+        android:paddingLeft="@dimen/_15sdp"
+        android:paddingRight="@dimen/_15sdp"
+        android:text="Digital Astrology Calender - 2023"
+        android:textColor="#6A3488"
+        android:textSize="@dimen/_25sdp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:paddingLeft="@dimen/_45sdp"
+        android:paddingRight="@dimen/_45sdp"
+        android:gravity="center"
+        android:text="Digital Astrology Calender - 2023"
+        android:textSize="@dimen/_15sdp"/>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/digital_astro_cal_image"/>
+
+    <TextView
+        android:id="@+id/location_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginEnd="@dimen/_15sdp"
+        android:padding="@dimen/_10sdp"
+        android:text="1 Location - ₹1,499"
+        android:gravity="center"
+        android:textColor="#B52E94"
+        android:textSize="@dimen/_14sdp"
+        android:textStyle="bold"
+        android:background="@drawable/rounded_border"/>
+
+    <TextView
+        android:id="@+id/location_3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginEnd="@dimen/_15sdp"
+        android:padding="@dimen/_10sdp"
+        android:text="3 Location - ₹1,999"
+        android:gravity="center"
+        android:textColor="#B52E94"
+        android:textSize="@dimen/_14sdp"
+        android:textStyle="bold"
+        android:background="@drawable/rounded_border"/>
+
+    <TextView
+        android:id="@+id/location_5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginEnd="@dimen/_15sdp"
+        android:padding="@dimen/_10sdp"
+        android:text="5 Locations - ₹3,999"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_14sdp"
+        android:textStyle="bold"
+        android:background="@drawable/coloured_rounded_border"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@android:color/transparent" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:padding="@dimen/_15sdp"
+        android:text="By continuing, I agree to Cosmic Connect Terms and Conditions and Privacy Policy"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:background="@color/white"/>
+
+</LinearLayout>
