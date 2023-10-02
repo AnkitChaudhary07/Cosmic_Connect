@@ -8,18 +8,9 @@
     android:orientation="vertical"
     tools:context=".TransitRemediesMain">
 
-    <TextView
-        android:id="@+id/action_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/_12sdp"
-        android:text="  Transit Remedies"
-        android:drawableLeft="@drawable/back_arrow"
-        android:textStyle="bold"
-        android:textSize="@dimen/_15ssp"
-        android:textColor="#562A73"
-        android:background="@color/white"
-        android:paddingBottom="10dp" />
+    <include layout="@layout/toolbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
     <ImageView
         android:id="@+id/saturn_aquarious"

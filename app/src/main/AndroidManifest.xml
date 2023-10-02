@@ -15,6 +15,15 @@
         android:theme="@style/Theme.CosmicInsights"
         tools:targetApi="31">
         <activity
+            android:name=".TransitNewsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".TodayAtGlanceActivity"
+            android:exported="false" />
+        <activity
+            android:name=".TodaysPanchangActivity"
+            android:exported="false" />
+        <activity
             android:name=".ImportantDaysActivity"
             android:exported="false" />
         <activity

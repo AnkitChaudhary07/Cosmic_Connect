@@ -38,7 +38,7 @@ public class HomeFragment extends Fragment {
 
 
     SearchView search;
-    ImageView transit_remedies_image;
+    ImageView transit_remedies_image, transit_news_image, today_panchang_image, today_glance_image;
     ProgressBar progressBar;
     TextView date, textView;
 
@@ -53,6 +53,11 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         date = view.findViewById(R.id.date);
+        today_panchang_image = view.findViewById(R.id.today_panchang_image);
+        today_glance_image = view.findViewById(R.id.today_glance_image);
+        search = view.findViewById(R.id.search);
+        transit_remedies_image = view.findViewById(R.id.transit_remedies_image);
+        transit_news_image = view.findViewById(R.id.transit_news_image);
 
         // Update the text of the TextView with the current date and time
         SimpleDateFormat sdf = new SimpleDateFormat("d MMM yyyy hh:mm", Locale.getDefault());
@@ -61,11 +66,40 @@ public class HomeFragment extends Fragment {
 
         search = view.findViewById(R.id.search);
         transit_remedies_image = view.findViewById(R.id.transit_remedies_image);
+        transit_news_image = view.findViewById(R.id.transit_news_image);
 
+        //Clicking on Transit Remedies...
         transit_remedies_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), TransitRemediesMain.class);
+                startActivity(intent);
+            }
+        });
+
+        //Clicking on Transit news...
+        transit_news_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), TransitNewsActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        //Clicking on Today At a Glance...
+        today_glance_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), TodayAtGlanceActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        //Clicking on Today's Panchang
+        today_panchang_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), TodaysPanchangActivity.class);
                 startActivity(intent);
             }
         });

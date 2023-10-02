@@ -1,7 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.CosmicInsights" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="colorPrimary">#070707</item>
+        <item name="colorPrimary">#B52E94</item>
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>

@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     tools:context=".ChartsFragment"
     android:orientation="vertical"
+    android:padding="@dimen/_15ssp"
     android:background="@drawable/background">
 
 <TextView
@@ -15,7 +16,7 @@
     android:textSize="@dimen/_15ssp"
     android:textColor="@color/white"
     android:padding="@dimen/_10sdp"
-    android:background="@drawable/border_home_buttons"/>
+    android:background="@drawable/coloured_rounded_border"/>
 
     <SearchView
         android:id="@+id/search"
@@ -30,75 +31,218 @@
     <HorizontalScrollView
         android:id="@+id/charts_scroll"
         android:layout_width="match_parent"
-        android:padding="@dimen/_10sdp"
-        android:background="@drawable/rounded_border"
-        android:layout_height="@dimen/_100sdp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_15sdp"
         tools:ignore="SpeakableTextPresentCheck">
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="100dp"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/all_text"
-            android:layout_width="@dimen/_100sdp"
-            android:layout_height="@dimen/_50sdp"
-            android:text="All"
-            android:textColor="@color/white"
-            android:layout_gravity="center"
-            android:gravity="center_horizontal"
-            android:textSize="@dimen/_13sdp"
-            android:textStyle="bold"
-            android:drawableTop="@drawable/baseline_checklist_24"/>
+            <ImageView
+                android:id="@+id/relatives_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:src="@drawable/relatives_svg"/>
 
+            <ImageView
+                android:id="@+id/family_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:src="@drawable/family_svg"/>
 
-            <TextView
-                android:id="@+id/family_text"
-                android:layout_width="@dimen/_100sdp"
-                android:layout_height="@dimen/_50sdp"
-                android:text="Family"
-                android:textColor="@color/white"
-                android:layout_gravity="center"
-                android:gravity="center_horizontal"
-                android:textSize="@dimen/_13sdp"
-                android:textStyle="bold"
-                android:drawableTop="@drawable/baseline_heart_broken_24"/>
+            <ImageView
+                android:id="@+id/celebrity_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:src="@drawable/celebrity_svg"/>
 
-            <TextView
-                android:id="@+id/friends_text"
-                android:layout_width="@dimen/_100sdp"
-                android:layout_height="@dimen/_50sdp"
-                android:text="Friends"
-                android:textColor="@color/white"
-                android:layout_gravity="center"
-                android:gravity="center_horizontal"
-                android:textSize="@dimen/_13sdp"
-                android:textStyle="bold"
-                android:drawableTop="@drawable/baseline_people_24"/>
-
-            <TextView
-                android:id="@+id/celebrity_text"
-                android:layout_width="@dimen/_100sdp"
-                android:layout_height="@dimen/_50sdp"
-                android:text="Celebrity"
-                android:textColor="@color/white"
-                android:layout_gravity="center"
-                android:gravity="center_horizontal"
-                android:textSize="@dimen/_13sdp"
-                android:textStyle="bold"
-                android:drawableTop="@drawable/baseline_star_purple500_24"/>
+            <ImageView
+                android:id="@+id/others_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:src="@drawable/others_svg"/>
 
         </LinearLayout>
     </HorizontalScrollView>
 
-    <ImageView
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/sub_charts"
-        android:layout_marginBottom="@dimen/_100sdp"/>
+        android:layout_marginTop="@dimen/_13sdp"
+        android:text="Featured"
+        android:textColor="#F1DDFC"
+        android:gravity="center"/>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_13sdp"
+        android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rectangle_background"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/filter_profile_img"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Filter Profile"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:textSize="@dimen/_15sdp"
+            android:textStyle="bold"
+            android:textColor="#562A73"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_3sdp"
+            android:text="Based on Nakshatras\nand Planet Nakshatra"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:textSize="@dimen/_8sdp"
+            android:textColor="#562A73"
+            tools:ignore="TextSizeCheck"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_gravity="center"
+            android:background="@drawable/coloured_rounded_border"
+            android:text="Get now" />
+
+    </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_25sdp"
+            android:background="@drawable/rectangle_background"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/birth_info_img"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Birth Info"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:textSize="@dimen/_15sdp"
+                android:textStyle="bold"
+                android:textColor="#562A73"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_3sdp"
+                android:text="Platinum Plus Pack"
+                android:textColor="#562A73"
+                android:textSize="@dimen/_8sdp"
+                tools:ignore="TextSizeCheck" />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_gravity="center"
+                android:background="@drawable/coloured_rounded_border"
+                android:text="Get now" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_13sdp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rectangle_background"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/get_multiple_img"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Get Multiple"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:textSize="@dimen/_15sdp"
+                android:textStyle="bold"
+                android:textColor="#562A73"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_3sdp"
+                android:text="Unlock the full\npotential !"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:textSize="@dimen/_8sdp"
+                android:textColor="#562A73"
+                tools:ignore="TextSizeCheck"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_gravity="center"
+                android:background="@drawable/coloured_rounded_border"
+                android:text="Get now" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_25sdp"
+            android:background="@drawable/rectangle_background"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/profile"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Name"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:textSize="@dimen/_15sdp"
+                android:textStyle="bold"
+                android:textColor="#562A73"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_3sdp"
+                android:text="Primary Profile"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:textSize="@dimen/_8sdp"
+                android:textColor="#562A73"
+                tools:ignore="TextSizeCheck"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_gravity="center"
+                android:background="@drawable/coloured_rounded_border"
+                android:text="Get now" />
+
+        </LinearLayout>
+    </LinearLayout>
 
 
 </LinearLayout>
