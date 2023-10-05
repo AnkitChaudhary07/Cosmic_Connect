@@ -7,21 +7,20 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class TodayAtGlanceActivity extends AppCompatActivity {
+public class FeaturedToolsActivity extends AppCompatActivity {
 
     ImageView back_btn;
     TextView toolbar_text;
-    ImageView aries;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_today_at_glance);
+        setContentView(R.layout.activity_featured_tools);
 
         back_btn = findViewById(R.id.back_btn);
         toolbar_text = findViewById(R.id.toolbar_text);
 
-        toolbar_text.setText("Today At a Glance");
+        toolbar_text.setText("Featured Tools");
 
         back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -29,5 +28,7 @@ public class TodayAtGlanceActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
+
+
     }
 }

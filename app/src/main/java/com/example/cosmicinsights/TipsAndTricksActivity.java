@@ -1,4 +1,4 @@
-package com.example.cosmicinsights;
+ package com.example.cosmicinsights;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,21 +7,19 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class TodayAtGlanceActivity extends AppCompatActivity {
-
-    ImageView back_btn;
-    TextView toolbar_text;
-    ImageView aries;
+ public class TipsAndTricksActivity extends AppCompatActivity {
+     ImageView back_btn;
+     TextView toolbar_text;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_today_at_glance);
+        setContentView(R.layout.activity_tips_and_tricks);
 
         back_btn = findViewById(R.id.back_btn);
         toolbar_text = findViewById(R.id.toolbar_text);
 
-        toolbar_text.setText("Today At a Glance");
+        toolbar_text.setText("Tips & Tricks");
 
         back_btn.setOnClickListener(new View.OnClickListener() {
             @Override

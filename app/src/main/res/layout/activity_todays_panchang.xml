@@ -6,8 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#F1DDFC"
-    android:paddingLeft="@dimen/_15sdp"
-    android:paddingRight="@dimen/_15sdp"
+    android:padding="@dimen/_15sdp"
     tools:context=".TodaysPanchangActivity">
 
     <LinearLayout
@@ -50,24 +49,11 @@
 
 
     </LinearLayout>
-
-    <ScrollView
+    <ListView
+        android:id="@+id/listView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_15sdp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/panchang_data"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Today's panchang"
-                android:textSize="@dimen/_20sdp"/>
-
-        </LinearLayout>
-    </ScrollView>
+        android:layout_marginTop="@dimen/_15sdp"
+        android:background="@drawable/rounded_border"/>
 
 </LinearLayout>

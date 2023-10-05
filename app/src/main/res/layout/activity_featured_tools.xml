@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F1DDFC"
+    android:orientation="vertical"
+    tools:context=".FeaturedToolsActivity">
+
+    <include layout="@layout/toolbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:padding="@dimen/_15sdp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="@dimen/_70sdp"
+           android:padding="@dimen/_10sdp"
+           android:background="@drawable/rounded_white_border"
+           android:text="Cosmic Timeline"
+           android:textStyle="bold"
+           android:textSize="@dimen/_15ssp"
+           android:textColor="#6A3488"
+           app:drawableRightCompat="@drawable/cosmic_timeline_icon" />
+
+
+        <Space
+            android:layout_width="@dimen/_10sdp"
+        android:layout_height="match_parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_70sdp"
+            android:padding="@dimen/_10sdp"
+            android:background="@drawable/rounded_white_border"
+            android:text="Current Transit"
+            android:textStyle="bold"
+            android:textSize="@dimen/_15ssp"
+            android:textColor="#6A3488"
+            app:drawableEndCompat="@drawable/current_transit_icon" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:padding="@dimen/_15sdp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_70sdp"
+            android:padding="@dimen/_5sdp"
+            android:background="@drawable/rounded_white_border"
+            android:text="Cosmic \nCompatiability"
+            android:textStyle="bold"
+            android:textSize="@dimen/_15ssp"
+            android:textColor="#6A3488"
+            app:drawableEndCompat="@drawable/cosmic_compat_icon" />
+
+
+        <Space
+            android:layout_width="@dimen/_10sdp"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_75sdp"
+            android:padding="@dimen/_5sdp"
+            android:background="@drawable/rounded_white_border"
+            android:text="Jyothish Reference Table"
+            android:textStyle="bold"
+            android:textSize="@dimen/_15ssp"
+            android:textColor="#6A3488"
+            app:drawableEndCompat="@drawable/jyotish_ref_table_icon" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:padding="@dimen/_15sdp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_70sdp"
+            android:padding="@dimen/_5sdp"
+            android:background="@drawable/rounded_white_border"
+            android:text="Vedic Remedies"
+            android:textStyle="bold"
+            android:textSize="@dimen/_15ssp"
+            android:textColor="#6A3488"
+            app:drawableEndCompat="@drawable/vedic_remedies_icon" />
+
+
+        <Space
+            android:layout_width="@dimen/_10sdp"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_70sdp"
+            android:padding="@dimen/_5sdp"
+            android:background="@drawable/rounded_white_border"
+            android:text="Karakas"
+            android:textStyle="bold"
+            android:textSize="@dimen/_15ssp"
+            android:textColor="#6A3488"
+            app:drawableRightCompat="@drawable/canvas_icon" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:padding="@dimen/_15sdp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_70sdp"
+            android:padding="@dimen/_5sdp"
+            android:background="@drawable/rounded_white_border"
+            android:text="Canvas"
+            android:textStyle="bold"
+            android:textSize="@dimen/_15ssp"
+            android:textColor="#6A3488"
+            app:drawableEndCompat="@drawable/canvas_icon" />
+
+
+        <Space
+            android:layout_width="@dimen/_10sdp"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_70sdp"
+            android:padding="@dimen/_5sdp"
+            android:background="@drawable/rounded_white_border"
+            android:text="Panchang Calender"
+            android:textStyle="bold"
+            android:textSize="@dimen/_15ssp"
+            android:textColor="#6A3488"
+            app:drawableRightCompat="@drawable/calender_panchang" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:padding="@dimen/_15sdp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_70sdp"
+            android:padding="@dimen/_5sdp"
+            android:background="@drawable/rounded_white_border"
+            android:text="Muhurta Finder"
+            android:textStyle="bold"
+            android:textSize="@dimen/_15ssp"
+            android:textColor="#6A3488"
+            app:drawableEndCompat="@drawable/heart_icon" />
+
+
+        <Space
+            android:layout_width="@dimen/_10sdp"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_70sdp"
+            android:padding="@dimen/_5sdp"
+            android:background="@drawable/rounded_white_border"
+            android:text="Gochara Calender"
+            android:textStyle="bold"
+            android:textSize="@dimen/_15ssp"
+            android:textColor="#6A3488"
+            app:drawableRightCompat="@drawable/cosmic_timeline_icon" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:padding="@dimen/_15sdp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_70sdp"
+            android:padding="@dimen/_5sdp"
+            android:background="@drawable/rounded_white_border"
+            android:text="Ask a Question"
+            android:textStyle="bold"
+            android:textSize="@dimen/_15ssp"
+            android:textColor="#6A3488"
+            app:drawableEndCompat="@drawable/question_circle_icon" />
+
+
+        <Space
+            android:layout_width="@dimen/_10sdp"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_70sdp"
+            android:background="@drawable/rounded_white_border"
+            android:padding="@dimen/_5sdp"
+            android:text="Filter Profiles"
+            android:textColor="#6A3488"
+            android:textSize="@dimen/_15ssp"
+            android:textStyle="bold"
+            app:drawableRightCompat="@drawable/profile" />
+
+
+    </LinearLayout>
+
+</LinearLayout>
