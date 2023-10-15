@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F1DDFC"
+    android:background="@drawable/rounded_border"
     android:orientation="vertical"
     tools:context=".HomeFragment">
 
@@ -56,24 +56,57 @@
             android:layout_height="wrap_content"
             android:src="@drawable/calender"/>
 
-            <ImageView
-                android:layout_weight="1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/search"/>
+<!--            <ImageView-->
+<!--                android:layout_weight="1"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:src="@drawable/search"/>-->
 
         </LinearLayout>
 
-        <SearchView
-            android:id="@+id/search"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/border"
-            android:layout_below="@+id/sub_nav"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:layout_marginBottom="@dimen/_10sdp"
-            android:queryHint="Enter Place"
-            android:textColorHint="@color/black" />
+            android:layout_marginTop="@dimen/_25sdp"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/city_name"
+                android:layout_width="0dp"
+            android:layout_weight="1"
+            android:padding="@dimen/_5sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_marginTop="@dimen/_36sdp"
+            android:hint="Set your location"
+            android:background="@color/white"
+            android:textSize="@dimen/_16ssp"
+            android:textColorHint="@color/black"
+            android:textColor="@color/black"
+            android:layout_marginBottom="@dimen/_16sdp" />
+
+            <ImageView
+                android:id="@+id/search_location"
+                android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3"
+                android:layout_marginTop="@dimen/_35sdp"
+            android:src="@drawable/search" />
+        </LinearLayout>
+
+
+
+        <!--        <SearchView-->
+<!--            android:id="@+id/search_location"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:background="@drawable/border"-->
+<!--            android:layout_below="@+id/sub_nav"-->
+<!--            android:layout_marginTop="@dimen/_10sdp"-->
+<!--            android:layout_marginBottom="@dimen/_10sdp"-->
+<!--            android:queryHint="Enter Place"-->
+<!--            android:inputType="text"-->
+<!--            android:imeOptions="actionSearch"-->
+<!--            android:textColorHint="@color/black" />-->
 
     </RelativeLayout>
 
@@ -86,177 +119,67 @@
         app:layout_constraintBottom_toBottomOf="@+id/top_nav">
 
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:padding="@dimen/_8sdp">
 
-            <ImageView
-                android:id="@+id/addvertisement_image"
-                android:layout_gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:src="@drawable/addvertisement" />
 
             <TextView
+                android:id="@+id/todayPanchang_txt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:layout_marginBottom="@dimen/_10sdp"
-                android:text="RECOMMENDED FOR YOU"
+                android:text="Today's Panchang"
+                android:textSize="@dimen/_20sdp"
                 android:textStyle="bold"
-                android:textColor="#5A2B77"
+                android:textColor="@color/black"
                 android:gravity="center"/>
 
-            <HorizontalScrollView
-                android:layout_width="match_parent"
-                android:layout_below="@id/membership_heading"
-                android:layout_height="wrap_content"
-                tools:ignore="SpeakableTextPresentCheck">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:id="@+id/transit_remedies_image"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/transit_remedies_image" />
-
-                    <ImageView
-                        android:id="@+id/transit_news_image"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/transit_news_image" />
-
-                    <ImageView
-                        android:id="@+id/tips_tricks_image"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/tips_tricks_image" />
-
-                    <ImageView
-                        android:id="@+id/today_glance_image"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/today_glance_image" />
-
-                    <ImageView
-                        android:id="@+id/go_offline_image"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/go_offline_image" />
-                </LinearLayout>
-            </HorizontalScrollView>
 
             <TextView
-                android:layout_width="match_parent"
+                android:id="@+id/nakshatra"
+                android:layout_width="@dimen/_130sdp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:layout_marginBottom="@dimen/_10sdp"
-                android:text="All about Today"
+                android:padding="@dimen/_20sdp"
+                android:layout_below="@+id/todayPanchang_txt"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:text="Nakshatra:-\n"
+                android:textSize="@dimen/_14sdp"
                 android:textStyle="bold"
-                android:textColor="#5A2B77"
-                android:gravity="center"/>
-
-            <HorizontalScrollView
-                android:layout_width="match_parent"
-                android:layout_below="@id/membership_heading"
-                android:layout_height="wrap_content"
-                tools:ignore="SpeakableTextPresentCheck">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:id="@+id/today_panchang_image"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="@dimen/_5sdp"
-                        android:src="@drawable/today_panchang_image" />
-
-                    <ImageView
-                        android:id="@+id/timing_for_today_image"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="@dimen/_5sdp"
-                        android:src="@drawable/timing_for_today_image" />
-
-                    <ImageView
-                        android:id="@+id/glance_image2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="@dimen/_5sdp"
-                        android:src="@drawable/glance_image" />
-
-                </LinearLayout>
-            </HorizontalScrollView>
+                android:background="@drawable/background_2"
+                android:textColor="@color/white"/>
 
             <TextView
+                android:id="@+id/hora"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:layout_marginBottom="@dimen/_10sdp"
-                android:text="Explore"
+                android:padding="@dimen/_20sdp"
+                android:layout_below="@+id/todayPanchang_txt"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_toEndOf="@id/nakshatra"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginEnd="@dimen/_20sdp"
+                android:text="Hora:-\n"
+                android:textSize="@dimen/_14sdp"
                 android:textStyle="bold"
-                android:textColor="#5A2B77"
-                android:gravity="center"/>
+                android:background="@drawable/background_2"
+                android:textColor="@color/white"/>
 
-            <ScrollView
-                android:layout_width="match_parent"
-                android:layout_below="@id/membership_heading"
+            <TextView
+                android:id="@+id/choghadiya"
+                android:layout_width="@dimen/_140sdp"
                 android:layout_height="wrap_content"
-                tools:ignore="SpeakableTextPresentCheck">
+                android:padding="@dimen/_20sdp"
+                android:layout_below="@+id/nakshatra"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:text="Choghadiya:-\n"
+                android:textSize="@dimen/_14sdp"
+                android:textStyle="bold"
+                android:background="@drawable/background_2"
+                android:textColor="@color/white"/>
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:id="@+id/advanced_panchang_image"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="@dimen/_5sdp"
-                        android:src="@drawable/advanced_panchang_image" />
-
-                    <ImageView
-                        android:id="@+id/featured_tools_image"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="@dimen/_5sdp"
-                        android:src="@drawable/featured_tools_image" />
-
-                    <ImageView
-                        android:id="@+id/nak_hora_image"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="@dimen/_5sdp"
-                        android:src="@drawable/nak_hora_image" />
-
-                    <ImageView
-                        android:id="@+id/spl_events_image"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="@dimen/_5sdp"
-                        android:src="@drawable/spl_events_image" />
-
-                    <ImageView
-                        android:id="@+id/tools_image"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="@dimen/_5sdp"
-                        android:src="@drawable/tools_image" />
-
-                </LinearLayout>
-            </ScrollView>
-
-        </LinearLayout>
+        </RelativeLayout>
 
     </ScrollView>
 

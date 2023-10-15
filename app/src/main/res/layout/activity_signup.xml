@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#7D4599"
+    tools:context=".SignupActivity">
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_centerInParent="true" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="@dimen/_16sdp"
+        android:gravity="center">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Register"
+        android:textSize="@dimen/_24ssp"
+        android:textColor="#F1DDFC"
+        android:textStyle="bold"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Name Input Field -->
+    <EditText
+        android:id="@+id/user_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Name"
+        android:textSize="@dimen/_16ssp"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"
+        android:layout_marginBottom="@dimen/_16sdp"
+        android:layout_below="@+id/progress_bar"
+        android:layout_centerHorizontal="true" />
+
+    <!-- Email Input Field -->
+    <EditText
+        android:id="@+id/user_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Email"
+        android:textSize="@dimen/_16ssp"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"
+        android:layout_marginBottom="@dimen/_16sdp"
+        android:layout_below="@+id/user_name"
+        android:layout_centerHorizontal="true" />
+
+    <!-- Password Input Field -->
+    <EditText
+        android:id="@+id/user_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Password"
+        android:textSize="@dimen/_16ssp"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"
+        android:layout_marginBottom="@dimen/_16sdp"
+        android:layout_below="@+id/user_email"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:id="@+id/confirm_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Confirm Password"
+        android:textSize="@dimen/_16ssp"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"
+        android:layout_marginBottom="@dimen/_16sdp"
+        android:layout_below="@+id/user_password"
+        android:layout_centerHorizontal="true" />
+
+    <!-- Signup Button -->
+    <Button
+        android:id="@+id/signUp_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_10sdp"
+        android:background="@drawable/rounded_border"
+        android:text="SignUp"
+        android:layout_below="@+id/confirm_password"
+        android:layout_centerHorizontal="true" />
+
+    <!-- Signup Option -->
+    <TextView
+        android:id="@+id/go_to_signin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Already have an account? Sign in"
+        android:textColor="#F1DDFC"
+        android:textSize="@dimen/_15ssp"
+        android:textStyle="bold"
+        android:layout_below="@+id/signUp_btn"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_20sdp" />
+
+</LinearLayout>
+
+</RelativeLayout>
