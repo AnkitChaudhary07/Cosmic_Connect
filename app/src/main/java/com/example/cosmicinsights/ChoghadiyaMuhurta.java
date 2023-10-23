@@ -1,7 +1,6 @@
 package com.example.cosmicinsights;
 
 import android.content.Context;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,8 +34,6 @@ public class ChoghadiyaMuhurta {
                     @Override
                     public void onResponse(String response) {
                         try {
-                            boolean isDayTime = false;
-
                             // Parse the current time to determine if it's daytime
                             SimpleDateFormat sdf = new SimpleDateFormat("hh:mm", Locale.getDefault());
                             Date currentTime = sdf.parse(time);
@@ -62,7 +59,6 @@ public class ChoghadiyaMuhurta {
                                 Date endTime = sdf.parse(end);
 
                                 if (currentTime.after(startTime) && currentTime.before(endTime)) {
-                                    isDayTime = true;
                                     closestMuhurat = muhurat;
                                     closestStartTime = startTime;
                                     closestEndTime = endTime;
@@ -70,27 +66,22 @@ public class ChoghadiyaMuhurta {
                                 }
                             }
 
-                            // If it's not daytime, display a message
-                            if (!isDayTime) {
-                                Toast.makeText(context, "No data available for the current time.", Toast.LENGTH_SHORT).show();
-                            } else {
-                                // Display the closest muhurat and its time in the provided TextView
-                                //String muhuratData = "Muhurat: " + closestMuhurat + "\nStart: " + sdfTime.format(closestStartTime) + "\nEnd: " + sdfTime.format(closestEndTime);
-                                String muhuratData = "Chogadiya:-\n\n" + "Muhurat: " + closestMuhurat;
-                                textView.setText(muhuratData);
-                            }
+                            // Display the closest muhurat and its time in the provided TextView
+                            String muhuratData = "Chogadiya:-\n\n" + "Muhurat: " + closestMuhurat;
+                            textView.setText(muhuratData);
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Toast.makeText(context, "JSON Parsing Error", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show();
                         } catch (java.text.ParseException e) {
                             e.printStackTrace();
-                            Toast.makeText(context, "Time Parsing Error", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "Time Error", Toast.LENGTH_SHORT).show();
                         }
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        // Handle network errors
                         Toast.makeText(context, "Network Error", Toast.LENGTH_SHORT).show();
                     }
                 });

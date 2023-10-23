@@ -2,7 +2,9 @@ package com.example.cosmicinsights;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -32,6 +34,17 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        SharedPreferences sharedPref = getSharedPreferences("loginStatus", Context.MODE_PRIVATE);
+        boolean isLoggedIn = sharedPref.getBoolean("isLoggedIn", false);
+
+        if (isLoggedIn) {
+            // The user is already logged in, navigate directly to the main part of your app
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
+
         go_to_signup = findViewById(R.id.go_to_signup);
         login_btn = findViewById(R.id.login_btn);
         email1 = findViewById(R.id.email);
@@ -59,6 +72,13 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+    private void setLoggedInStatus(boolean status) {
+        SharedPreferences sharedPref = getSharedPreferences("loginStatus", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putBoolean("isLoggedIn", status);
+        editor.apply();
+    }
+
 
     private class LoginTask extends AsyncTask<String, Void, String> {
         private int responseCode;
@@ -110,6 +130,9 @@ public class LoginActivity extends AppCompatActivity {
                     // Login failed
                     Toast.makeText(LoginActivity.this, result, Toast.LENGTH_SHORT).show();
                 } else if (result.equals("success")) {
+                    // Set a flag in SharedPreferences to indicate the user is logged in
+                    setLoggedInStatus(true);
+
                     Toast.makeText(LoginActivity.this, "Login Success...", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
@@ -120,16 +143,6 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(LoginActivity.this, "Login failed. An error occurred.", Toast.LENGTH_SHORT).show();
             }
         }
-    }
-    private String readResponse(java.io.InputStream is) throws IOException {
-        BufferedReader in = new BufferedReader(new InputStreamReader(is));
-        StringBuilder response = new StringBuilder();
-        String inputLine;
-        while ((inputLine = in.readLine()) != null) {
-            response.append(inputLine);
-        }
-        in.close();
-        return response.toString();
     }
 
 }

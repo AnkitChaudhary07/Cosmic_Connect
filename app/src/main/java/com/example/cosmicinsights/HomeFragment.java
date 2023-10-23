@@ -1,5 +1,7 @@
 package com.example.cosmicinsights;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -17,7 +19,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.SearchView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,17 +51,25 @@ import java.util.Locale;
 
 public class HomeFragment extends Fragment {
 
+    GeoSearchApi geoSearchApi;
     Hora horaMuhurta;
     ChoghadiyaMuhurta choghadiyaMuhurta;
+    MonthlyPanchang monthlyPanchang;
+
+    Retrogrades retrogrades_obj;
+    String selectedLanguage = "en";
     private final String API_KEY = "9100d2f1-d628-5866-bbfe-13507ea0bf38";
     SimpleDateFormat sdfTime = new SimpleDateFormat("hh:mm", Locale.getDefault());
     private final String time = sdfTime.format(new Date());
     SimpleDateFormat sdfDate2 = new SimpleDateFormat("d/MM/yyyy", Locale.getDefault());
     private final String date2 = sdfDate2.format(new Date());
+
+    private Spinner languageSpinner;
+    ScrollView scrollView2;
     EditText city_name;
     ImageView search_location;
     ProgressBar progressBar;
-    TextView date, nakshatra, hora, choghadiya;
+    TextView date, nakshatra, hora, choghadiya, monthly_panchang, retrogrades,lattitude, longitude, timeZone;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -69,12 +81,34 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
+        AlertDialog alertDialog = new AlertDialog.Builder(requireContext()).create();
+        alertDialog.setTitle("Please enter your city...");
+        alertDialog.setIcon(R.drawable.search);
+
+        alertDialog.setButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+            }
+        });
+
+        scrollView2 = view.findViewById(R.id.scrollView2);
         date = view.findViewById(R.id.date);
         search_location = view.findViewById(R.id.search_location);
         city_name = view.findViewById(R.id.city_name);
+        lattitude = view.findViewById(R.id.lattitude);
+        longitude = view.findViewById(R.id.longitude);
+        timeZone = view.findViewById(R.id.timeZone);
+        languageSpinner = view.findViewById(R.id.languageSpinner);
+        progressBar = view.findViewById(R.id.progressBar);
+
         nakshatra = view.findViewById(R.id.nakshatra);
         hora = view.findViewById(R.id.hora);
         choghadiya = view.findViewById(R.id.choghadiya);
+        monthly_panchang = view.findViewById(R.id.monthly_panchang);
+        retrogrades = view.findViewById(R.id.retrogrades);
+
+        // Disable or hide the UI elements you want to show after entering a city
+        scrollView2.setVisibility(view.GONE);
 
         // Update the text of the TextView with the current date and time
         SimpleDateFormat sdf = new SimpleDateFormat("d MMM yyyy hh:mm", Locale.getDefault());
@@ -85,102 +119,97 @@ public class HomeFragment extends Fragment {
         SimpleDateFormat sdfTime = new SimpleDateFormat("hh:mm", Locale.getDefault());
         final String time = sdfTime.format(new Date());
 
-        //For Nakshatra
-        ApiRequestTask apiRequestTask = new ApiRequestTask();
-        apiRequestTask.execute();
+        //Year
+        SimpleDateFormat sdfYear = new SimpleDateFormat("yyyy", Locale.getDefault());
+        final String year = sdfYear.format(new Date());
 
-        // Initialize and execute HoraApiRequestTask
-        horaMuhurta = new Hora((requireContext()));
-        String apiHora = "https://api.vedicastroapi.com/v3-json/panchang/hora-muhurta?api_key=" + API_KEY + "&date=" + date2 + "&tz=5.5&lat=11.22&lon=77.00&time=" + time + "&lang=en";
-        horaMuhurta.fetchData(apiHora, hora);
+        //Language Spinner
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(requireContext(),
+                R.array.languages, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        languageSpinner.setAdapter(adapter);
+        selectedLanguage = languageSpinner.getSelectedItem().toString();
 
-        // Initialize and execute ChoghadiyaApiRequestTask
-        choghadiyaMuhurta = new ChoghadiyaMuhurta(requireContext());
-        String apiChoghadiyaMuhurta = "https://api.vedicastroapi.com/v3-json/panchang/choghadiya-muhurta?api_key=" + API_KEY + "&date=" + date2 + "&tz=5.5&lat=11.22&lon=77.00&time=" + time + "&lang=en";
-        choghadiyaMuhurta.fetchData(apiChoghadiyaMuhurta, choghadiya);
-
-
-
+        String str = city_name.getText().toString().trim();
+        if (str.isEmpty()) {
+            // Show an alert to enter a city
+            alertDialog.show();
+        }
         search_location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String city = city_name.getText().toString();
-                if (!city.isEmpty()) {
-                    requestLatLongFromAPI(city);
-                } else {
-                    Toast.makeText(requireContext(), "Please enter a city name", Toast.LENGTH_SHORT).show();
-                }
+                city_name.clearFocus();
+                String city = city_name.getText().toString().trim();
+                    // Initialize and execute functions/classes here
+                    geoSearchApi = new GeoSearchApi(requireContext());
+                    //String apiGeoSearch = "https://api.vedicastroapi.com/v3-json/utilities/geo-search?city=delhi&api_key=" + API_KEY;
+                    String apiGeoSearch = "https://api.vedicastroapi.com/v3-json/utilities/geo-search?city=" + city + "&api_key=" + API_KEY;
+                    geoSearchApi.fetchData(apiGeoSearch, lattitude, longitude, timeZone);
+
+                    final String lat = lattitude.getText().toString();
+                    final String lon = longitude.getText().toString();
+                    final String tzone = timeZone.getText().toString();
+
+                    // For Nakshatra
+                    ApiRequestTask apiRequestTask = new ApiRequestTask();
+                    apiRequestTask.execute();
+
+                    // Initialize and execute HoraApiRequestTask
+                    horaMuhurta = new Hora((requireContext()));
+                    String apiHora = "https://api.vedicastroapi.com/v3-json/panchang/hora-muhurta?api_key=" + API_KEY + "&date=" + date2 + "&tz=5.5&lat=11.22&lon=77.00&time=05:20&lang=en";
+                    horaMuhurta.fetchData(apiHora, hora);
+
+                    // Initialize and execute ChoghadiyaApiRequestTask
+                    choghadiyaMuhurta = new ChoghadiyaMuhurta(requireContext());
+                    String apiChoghadiyaMuhurta = "https://api.vedicastroapi.com/v3-json/panchang/choghadiya-muhurta?api_key=" + API_KEY + "&date=" + date2 + "&tz=5.5&lat=11.22&lon=77.00&time=05:20&lang=en";
+                    choghadiyaMuhurta.fetchData(apiChoghadiyaMuhurta, choghadiya);
+
+                    // Initialize MonthlyPanchang and set the click listener
+                    monthlyPanchang = new MonthlyPanchang(requireContext());
+                    //Initialize Monthly Panchang
+                    monthly_panchang.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            String apiMon_Pan = "https://api.vedicastroapi.com/v3-json/panchang/monthly-panchang?api_key=" + API_KEY + "&date=" + date2 + "&tz=" + tzone + "&lat=" + lat + "&lon=" + lon + "&time=" + time + "&lang=en";
+                            monthlyPanchang.fetchData(apiMon_Pan, monthly_panchang);
+                        }
+                    });
+
+                    String planet = horaMuhurta.getPlanet();
+                    // Initialize Retrogrades and set the click listener
+                    retrogrades_obj = new Retrogrades(requireContext());
+                    //Initialize Retrogrades
+                    retrogrades.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            String apiRetrogrades = "https://api.vedicastroapi.com/v3-json/panchang/retrogrades?api_key=" + API_KEY +  "&year=" + year + "&planet=Saturn&lang=en";
+                            retrogrades_obj.fetchRetrogradesData(apiRetrogrades, retrogrades);
+                        }
+                    });
+
+                    // Show the UI elements after successful retrieval
+                    scrollView2.setVisibility(View.VISIBLE);
             }
         });
+        lattitude.setText(str);
+        longitude.setText(str);
+        timeZone.setText(str);
+
+        retrogrades.setText(str);
+
 
         return view;
     }
 
-    private void requestLatLongFromAPI(String city) {
-        String apiUrl = "https://api.vedicastroapi.com/v3-json/utilities/geo-search?city=" + "dehradun" + "&api_key=" + API_KEY;
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    URL url = new URL(apiUrl);
-                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                    connection.setRequestMethod("GET");
-
-                    int responseCode = connection.getResponseCode();
-
-                    if (responseCode == HttpURLConnection.HTTP_OK) {
-                        // Read the response from the API and extract the latitude and longitude
-                        InputStream inputStream = connection.getInputStream();
-                        InputStreamReader reader = new InputStreamReader(inputStream);
-                        BufferedReader bufferedReader = new BufferedReader(reader);
-                        StringBuilder response = new StringBuilder();
-                        String line;
-                        while ((line = bufferedReader.readLine()) != null) {
-                            response.append(line);
-                        }
-
-                        // Parse the JSON response
-                        JSONObject jsonResponse = new JSONObject(response.toString());
-                        JSONArray responseArray = jsonResponse.getJSONArray("response");
-
-                        if (responseArray.length() > 0) {
-                            JSONObject cityData = responseArray.getJSONObject(0);
-                            JSONArray coordinates = cityData.getJSONArray("coordinates");
-                            double latitude = Double.parseDouble(coordinates.getString(0));
-                            double longitude = Double.parseDouble(coordinates.getString(1));
-                            Toast.makeText(requireContext(), "success.....", Toast.LENGTH_SHORT).show();
-
-                            // Do something with the latitude and longitude values, for example, display them
-                            Log.d("LatLong", "Latitude: " + latitude + ", Longitude: " + longitude);
-                        } else {
-                            // Handle the case where no location data was found for the city
-                            Toast.makeText(requireContext(), "No location data found for the city: \"" + city, Toast.LENGTH_SHORT).show();
-                        }
-                        // Do something with the latitude and longitude values, for example, display them
-                    } else {
-                        // Handle the error case
-                        Toast.makeText(requireContext(), "Error occured", Toast.LENGTH_SHORT).show();
-                    }
-
-                    connection.disconnect();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
-    }
-
     public class ApiRequestTask extends AsyncTask<Void, Void, JSONObject> {
         private final String language = "en";
-        private final double lat = 28.6139;
-        private final double lon = 77.1025;
-        private final double tzone = 5.5;
-
+        private final String lat = lattitude.getText().toString();
+        private final String lon = longitude.getText().toString();
+        private final String tzone = timeZone.getText().toString();
         @Override
         protected JSONObject doInBackground(Void... voids) {
             try {
-                String urlString = "https://api.vedicastroapi.com/v3-json/panchang/panchang?api_key=" + API_KEY + "&date=" + date2 + "&tz=5.5&lat=11.2&lon=77.00&time=05:20&lang=en";
+                String urlString = "https://api.vedicastroapi.com/v3-json/panchang/panchang?api_key=" + API_KEY + "&date=" + date2 + "&tz=" + tzone + "&lat=" + lat + "&lon=" + lon + "&time=" + time + "&lang=en";
 
                 URL url = new URL(urlString);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();

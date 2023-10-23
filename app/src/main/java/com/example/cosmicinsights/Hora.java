@@ -21,6 +21,7 @@ import java.util.Locale;
 public class Hora {
     SimpleDateFormat sdfTime = new SimpleDateFormat("hh:mm a", Locale.getDefault());
     private Context context;
+    private String planet = "";
 
     public Hora(Context context) {
         this.context = context;
@@ -34,24 +35,19 @@ public class Hora {
                     @Override
                     public void onResponse(String response) {
                         try {
-                            boolean isDayTime = false;
-
-                            // Parse the current time to determine if it's daytime
                             SimpleDateFormat sdf = new SimpleDateFormat("hh:mm", Locale.getDefault());
                             Date currentTime = sdf.parse(time);
 
                             JSONObject jsonObject = new JSONObject(response);
                             JSONObject responseData = jsonObject.getJSONObject("response");
-
-                            // Choose the appropriate data based on time
                             JSONArray data = responseData.getJSONArray("horas");
 
-                            // Initialize variables to store the closest muhurat and its time
+                            // Initialize variables to store the closest Hora and its time
                             String closestHora = "";
                             Date closestStartTime = null;
                             Date closestEndTime = null;
 
-                            // Loop through the data to find the matching time
+                            // Loop through the data to find the matching Hora
                             for (int i = 0; i < data.length(); i++) {
                                 JSONObject item = data.getJSONObject(i);
                                 String horaData = item.getString("hora");
@@ -61,7 +57,6 @@ public class Hora {
                                 Date endTime = sdf.parse(end);
 
                                 if (currentTime.after(startTime) && currentTime.before(endTime)) {
-                                    isDayTime = true;
                                     closestHora = horaData;
                                     closestStartTime = startTime;
                                     closestEndTime = endTime;
@@ -69,21 +64,17 @@ public class Hora {
                                 }
                             }
 
-                            // If it's not daytime, display a message
-                            if (!isDayTime) {
-                                Toast.makeText(context, "No data available for the current time.", Toast.LENGTH_SHORT).show();
-                            } else {
-                                // Display the closest muhurat and its time in the provided TextView
-                                //String muhuratData = "Muhurat: " + closestMuhurat + "\nStart: " + sdfTime.format(closestStartTime) + "\nEnd: " + sdfTime.format(closestEndTime);
-                                String muhuratData = "Hora:-\n\n" + closestHora;
-                                textView.setText(muhuratData);
-                            }
+                            // Display the closest Hora and its time
+                            String muhuratData = "Hora: " + closestHora;
+                            planet = closestHora;
+                            textView.setText(muhuratData);
+
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Toast.makeText(context, "JSON Parsing Error", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show();
                         } catch (java.text.ParseException e) {
                             e.printStackTrace();
-                            Toast.makeText(context, "Time Parsing Error", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "Time Error", Toast.LENGTH_SHORT).show();
                         }
                     }
                 },
@@ -96,5 +87,7 @@ public class Hora {
 
         Volley.newRequestQueue(context).add(stringRequest);
     }
+    public String getPlanet() {
+        return planet;
+    }
 }
-

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/rounded_border"
+    android:background="@drawable/stars_background"
     android:orientation="vertical"
     tools:context=".HomeFragment">
 
@@ -65,24 +65,25 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/ll1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_25sdp"
+            android:layout_marginTop="@dimen/_15sdp"
             android:orientation="horizontal">
 
             <EditText
                 android:id="@+id/city_name"
                 android:layout_width="0dp"
             android:layout_weight="1"
-            android:padding="@dimen/_5sdp"
-            android:layout_height="@dimen/_30sdp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_36sdp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:padding="@dimen/_6sdp"
             android:hint="Set your location"
-            android:background="@color/white"
-            android:textSize="@dimen/_16ssp"
+            android:background="@drawable/rounded_white_border"
+            android:textSize="@dimen/_18ssp"
             android:textColorHint="@color/black"
-            android:textColor="@color/black"
-            android:layout_marginBottom="@dimen/_16sdp" />
+            android:textColor="@color/black" />
 
             <ImageView
                 android:id="@+id/search_location"
@@ -93,20 +94,51 @@
             android:src="@drawable/search" />
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_below="@+id/ll1"
+            android:orientation="horizontal">
 
+            <TextView
+                android:id="@+id/lattitude"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_7sdp"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:layout_weight="1"
+                android:textSize="@dimen/_10sdp"/>
 
-        <!--        <SearchView-->
-<!--            android:id="@+id/search_location"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:background="@drawable/border"-->
-<!--            android:layout_below="@+id/sub_nav"-->
-<!--            android:layout_marginTop="@dimen/_10sdp"-->
-<!--            android:layout_marginBottom="@dimen/_10sdp"-->
-<!--            android:queryHint="Enter Place"-->
-<!--            android:inputType="text"-->
-<!--            android:imeOptions="actionSearch"-->
-<!--            android:textColorHint="@color/black" />-->
+            <TextView
+                android:id="@+id/longitude"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_7sdp"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:layout_weight="1"
+                android:textSize="@dimen/_10sdp"/>
+
+            <TextView
+                android:id="@+id/timeZone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_7sdp"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:layout_weight="1"
+                android:textSize="@dimen/_10sdp"/>
+
+        </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone" />
 
     </RelativeLayout>
 
@@ -124,16 +156,45 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/_8sdp">
 
+            <TextView
+                android:id="@+id/select_lang_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_20sdp"
+                android:textStyle="bold"
+                android:text="Select Language" />
+
+            <Spinner
+                android:id="@+id/languageSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/select_lang_txt"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@drawable/rounded_border"
+                android:entries="@array/languages"
+                android:padding="@dimen/_5sdp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_2sdp"
+                android:layout_gravity="center"
+                android:layout_below="@id/languageSpinner"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:background="@android:color/white"/>
 
             <TextView
                 android:id="@+id/todayPanchang_txt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/languageSpinner"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:text="Today's Panchang"
                 android:textSize="@dimen/_20sdp"
                 android:textStyle="bold"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:gravity="center"/>
 
 
@@ -147,8 +208,8 @@
                 android:text="Nakshatra:-\n"
                 android:textSize="@dimen/_14sdp"
                 android:textStyle="bold"
-                android:background="@drawable/background_2"
-                android:textColor="@color/white"/>
+                android:background="@drawable/coloured_rounded_border"
+                android:textColor="@color/black"/>
 
             <TextView
                 android:id="@+id/hora"
@@ -163,8 +224,8 @@
                 android:text="Hora:-\n"
                 android:textSize="@dimen/_14sdp"
                 android:textStyle="bold"
-                android:background="@drawable/background_2"
-                android:textColor="@color/white"/>
+                android:background="@drawable/coloured_rounded_border"
+                android:textColor="@color/black"/>
 
             <TextView
                 android:id="@+id/choghadiya"
@@ -176,8 +237,38 @@
                 android:text="Choghadiya:-\n"
                 android:textSize="@dimen/_14sdp"
                 android:textStyle="bold"
-                android:background="@drawable/background_2"
+                android:background="@drawable/coloured_rounded_border"
+                android:textColor="@color/black"/>
+
+
+            <TextView
+                android:id="@+id/monthly_panchang"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_below="@+id/choghadiya"
+                android:text="Monthly Panchang"
+                android:drawableRight="@drawable/baseline_star_purple500_24"
+                android:textSize="@dimen/_12sdp"
+                android:textStyle="bold"
+                android:background="@drawable/rounded_border"
                 android:textColor="@color/white"/>
+
+                <TextView
+                    android:id="@+id/retrogrades"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_15sdp"
+                    android:layout_below="@+id/monthly_panchang"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_20sdp"
+                    android:text="Retrogrades"
+                    android:drawableRight="@drawable/baseline_tips_and_updates_24"
+                    android:textSize="@dimen/_13sdp"
+                    android:textStyle="bold"
+                    android:background="@drawable/rounded_border"
+                    android:textColor="@color/white"/>
 
         </RelativeLayout>
 
