@@ -1,6 +1,7 @@
 package com.example.cosmicinsights;
 
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -8,12 +9,14 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -45,19 +48,23 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 public class HomeFragment extends Fragment {
-
     GeoSearchApi geoSearchApi;
-    Hora horaMuhurta;
     ChoghadiyaMuhurta choghadiyaMuhurta;
-    MonthlyPanchang monthlyPanchang;
 
     Retrogrades retrogrades_obj;
     String selectedLanguage = "en";
+
+    //Used in location search bar...
+    int flag = 0;
+    String lat = "";
+    String lon = "";
+    String tzone = "";
     private final String API_KEY = "9100d2f1-d628-5866-bbfe-13507ea0bf38";
     SimpleDateFormat sdfTime = new SimpleDateFormat("hh:mm", Locale.getDefault());
     private final String time = sdfTime.format(new Date());
@@ -67,13 +74,16 @@ public class HomeFragment extends Fragment {
     private Spinner languageSpinner;
     ScrollView scrollView2;
     EditText city_name;
-    ImageView search_location;
-    ProgressBar progressBar;
-    TextView date, nakshatra, hora, choghadiya, monthly_panchang, retrogrades,lattitude, longitude, timeZone;
+    ImageView search_location, calendar;
+    ProgressBar progressBar, progressBar2;
+    TextView date, siuu, nakshatra, hora, choghadiya, monthly_panchang, retrogrades,lattitude, longitude, timeZone;
 
     public HomeFragment() {
         // Required empty public constructor
     }
+    //Year
+    SimpleDateFormat sdfYear = new SimpleDateFormat("yyyy", Locale.getDefault());
+    final String year = sdfYear.format(new Date());
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -82,8 +92,9 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         AlertDialog alertDialog = new AlertDialog.Builder(requireContext()).create();
-        alertDialog.setTitle("Please enter your city...");
-        alertDialog.setIcon(R.drawable.search);
+        alertDialog.setTitle("Please enter your city \nThen press the search bar.");
+        //Paint the search icon black...
+        // alertDialog.setIcon(R.drawable.search);
 
         alertDialog.setButton("Ok", new DialogInterface.OnClickListener() {
             @Override
@@ -93,6 +104,7 @@ public class HomeFragment extends Fragment {
 
         scrollView2 = view.findViewById(R.id.scrollView2);
         date = view.findViewById(R.id.date);
+        calendar = view.findViewById(R.id.calendar);
         search_location = view.findViewById(R.id.search_location);
         city_name = view.findViewById(R.id.city_name);
         lattitude = view.findViewById(R.id.lattitude);
@@ -100,18 +112,20 @@ public class HomeFragment extends Fragment {
         timeZone = view.findViewById(R.id.timeZone);
         languageSpinner = view.findViewById(R.id.languageSpinner);
         progressBar = view.findViewById(R.id.progressBar);
+        progressBar2 = view.findViewById(R.id.progressBar2);
 
         nakshatra = view.findViewById(R.id.nakshatra);
         hora = view.findViewById(R.id.hora);
         choghadiya = view.findViewById(R.id.choghadiya);
         monthly_panchang = view.findViewById(R.id.monthly_panchang);
         retrogrades = view.findViewById(R.id.retrogrades);
+        siuu = view.findViewById(R.id.siuu);
 
         // Disable or hide the UI elements you want to show after entering a city
         scrollView2.setVisibility(view.GONE);
 
         // Update the text of the TextView with the current date and time
-        SimpleDateFormat sdf = new SimpleDateFormat("d MMM yyyy hh:mm", Locale.getDefault());
+        SimpleDateFormat sdf = new SimpleDateFormat("d MMM yyyy", Locale.getDefault());
         String currentDateAndTime = sdf.format(new Date());
         date.setText(currentDateAndTime);
 
@@ -119,9 +133,13 @@ public class HomeFragment extends Fragment {
         SimpleDateFormat sdfTime = new SimpleDateFormat("hh:mm", Locale.getDefault());
         final String time = sdfTime.format(new Date());
 
-        //Year
-        SimpleDateFormat sdfYear = new SimpleDateFormat("yyyy", Locale.getDefault());
-        final String year = sdfYear.format(new Date());
+        //When Clicked on Calendar Icon...
+        calendar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showCalendar();
+            }
+        });
 
         //Language Spinner
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(requireContext(),
@@ -138,6 +156,8 @@ public class HomeFragment extends Fragment {
         search_location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                progressBar.setVisibility(View.VISIBLE);
+                flag = 1;
                 city_name.clearFocus();
                 String city = city_name.getText().toString().trim();
                     // Initialize and execute functions/classes here
@@ -146,66 +166,161 @@ public class HomeFragment extends Fragment {
                     String apiGeoSearch = "https://api.vedicastroapi.com/v3-json/utilities/geo-search?city=" + city + "&api_key=" + API_KEY;
                     geoSearchApi.fetchData(apiGeoSearch, lattitude, longitude, timeZone);
 
-                    final String lat = lattitude.getText().toString();
-                    final String lon = longitude.getText().toString();
-                    final String tzone = timeZone.getText().toString();
-
-                    // For Nakshatra
-                    ApiRequestTask apiRequestTask = new ApiRequestTask();
-                    apiRequestTask.execute();
-
-                    // Initialize and execute HoraApiRequestTask
-                    horaMuhurta = new Hora((requireContext()));
-                    String apiHora = "https://api.vedicastroapi.com/v3-json/panchang/hora-muhurta?api_key=" + API_KEY + "&date=" + date2 + "&tz=5.5&lat=11.22&lon=77.00&time=05:20&lang=en";
-                    horaMuhurta.fetchData(apiHora, hora);
-
-                    // Initialize and execute ChoghadiyaApiRequestTask
-                    choghadiyaMuhurta = new ChoghadiyaMuhurta(requireContext());
-                    String apiChoghadiyaMuhurta = "https://api.vedicastroapi.com/v3-json/panchang/choghadiya-muhurta?api_key=" + API_KEY + "&date=" + date2 + "&tz=5.5&lat=11.22&lon=77.00&time=05:20&lang=en";
-                    choghadiyaMuhurta.fetchData(apiChoghadiyaMuhurta, choghadiya);
-
-                    // Initialize MonthlyPanchang and set the click listener
-                    monthlyPanchang = new MonthlyPanchang(requireContext());
-                    //Initialize Monthly Panchang
-                    monthly_panchang.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            String apiMon_Pan = "https://api.vedicastroapi.com/v3-json/panchang/monthly-panchang?api_key=" + API_KEY + "&date=" + date2 + "&tz=" + tzone + "&lat=" + lat + "&lon=" + lon + "&time=" + time + "&lang=en";
-                            monthlyPanchang.fetchData(apiMon_Pan, monthly_panchang);
-                        }
-                    });
-
-                    String planet = horaMuhurta.getPlanet();
-                    // Initialize Retrogrades and set the click listener
-                    retrogrades_obj = new Retrogrades(requireContext());
-                    //Initialize Retrogrades
-                    retrogrades.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            String apiRetrogrades = "https://api.vedicastroapi.com/v3-json/panchang/retrogrades?api_key=" + API_KEY +  "&year=" + year + "&planet=Saturn&lang=en";
-                            retrogrades_obj.fetchRetrogradesData(apiRetrogrades, retrogrades);
-                        }
-                    });
-
-                    // Show the UI elements after successful retrieval
-                    scrollView2.setVisibility(View.VISIBLE);
+                // Introduce a 3-second delay using a Handler
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        // Call the function to make scrollView2 visible after the delay
+//                        lat = lattitude.getText().toString();
+//                        lon = longitude.getText().toString();
+//                        tzone = timeZone.getText().toString();
+                        makeScrollViewVisible();
+                    }
+                }, 3000);
             }
         });
-        lattitude.setText(str);
-        longitude.setText(str);
-        timeZone.setText(str);
 
-        retrogrades.setText(str);
+//        nakshatra.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                // Ensure that the location data is available before triggering the API call
+//                if (lat.isEmpty() || lon.isEmpty() || tzone.isEmpty()) {
+//                    // Handle the case where location data is not available
+//                    Toast.makeText(requireContext(), "Please select a city first.", Toast.LENGTH_SHORT).show();
+//                } else {
+//                    progressBar.setVisibility(View.VISIBLE);
+//                    // Trigger the API request
+//                    ApiRequestTask apiRequestTask = new ApiRequestTask();
+//                    apiRequestTask.execute();
+//                }
+//            }
+//        });
 
 
         return view;
     }
 
+    //Show Calendar...
+    private void showCalendar() {
+        final Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(requireContext(), new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int selectedYear, int selectedMonth, int selectedDay) {
+                SimpleDateFormat monthFormat = new SimpleDateFormat("MMM", Locale.getDefault());
+                calendar.set(selectedYear, selectedMonth, selectedDay);
+                String selectedDate =  selectedDay + " " + monthFormat.format(calendar.getTime()) + " " + selectedYear;
+                date.setText(selectedDate);
+            }
+        }, year, month, day);
+        datePickerDialog.show();
+    }
+
+    //Show Monthly Panchang Calendar...
+    private String monthlyPanchangDate = "";
+    private void showMonthlyPanchangCalendar() {
+        final Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(requireContext(), new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int selectedYear, int selectedMonth, int selectedDay) {
+                selectedMonth = selectedMonth + 1;
+                monthlyPanchangDate =  selectedDay + "/" + selectedMonth + "/" + selectedYear;
+
+                // Show the ProgressBar
+                progressBar2.setVisibility(View.VISIBLE);
+
+                String apiMon_Pan = "https://api.vedicastroapi.com/v3-json/panchang/monthly-panchang?api_key=" + API_KEY + "&date=" + monthlyPanchangDate + "&tz=" + tzone + "&lat=" + lat + "&lon=" + lon + "&time=" + time + "&lang=en";
+
+                // Create an instance of MonthlyPanchang and pass the selected date
+                MonthlyPanchang monthlyPanchangInstance = new MonthlyPanchang(requireContext(), monthlyPanchangDate);
+                monthlyPanchangInstance.setProgressBar(progressBar2);
+                monthlyPanchangInstance.fetchData(apiMon_Pan, monthly_panchang);
+            }
+        }, year, month, day);
+        datePickerDialog.show();
+    }
+
+
+    private void makeScrollViewVisible() {
+        progressBar.setVisibility(View.GONE);
+
+        // For Nakshatra
+        nakshatra.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Show the ProgressBar
+                progressBar2.setVisibility(View.VISIBLE);
+                lat = lattitude.getText().toString();
+                lon = longitude.getText().toString();
+                tzone = timeZone.getText().toString();
+                ApiRequestTask apiRequestTask = new ApiRequestTask();
+                apiRequestTask.execute();
+            }
+        });
+
+        // For Hora
+        Hora horaMuhurta = new Hora(requireContext());
+        hora.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                lat = lattitude.getText().toString();
+                lon = longitude.getText().toString();
+                tzone = timeZone.getText().toString();
+               // String apiHora = "https://api.vedicastroapi.com/v3-json/panchang/hora-muhurta?api_key=9100d2f1-d628-5866-bbfe-13507ea0bf38&date=11/03/1994&tz=5.5&lat=11.22&lon=77.00&time=05:20&lang=en";
+                String apiHora = "https://api.vedicastroapi.com/v3-json/panchang/hora-muhurta?api_key=" + API_KEY + "&date=" + date2 + "&tz=" + tzone + "&lat=" + lat + "&lon=" + lon + "&time=" + time + "&lang=en";
+                horaMuhurta.fetchData(apiHora, hora);
+            }
+        });
+
+        // For Choghadiya
+        choghadiyaMuhurta = new ChoghadiyaMuhurta(requireContext());
+        choghadiya.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String apiChoghadiyaMuhurta = "https://api.vedicastroapi.com/v3-json/panchang/choghadiya-muhurta?api_key=" + API_KEY + "&date=" + date2 + "&tz=" + tzone + "&lat=" + lat + "&lon=" + lon + "&time=" + time + "&lang=en";
+                choghadiyaMuhurta.fetchData(apiChoghadiyaMuhurta, choghadiya);
+            }
+        });
+
+        //For Monthly Panchang...
+        monthly_panchang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showMonthlyPanchangCalendar();
+            }
+        });
+
+        String planet = horaMuhurta.getPlanet();
+
+        siuu.setText(planet);
+
+        //For Retrogrades
+        retrogrades_obj = new Retrogrades(requireContext());
+        retrogrades.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                progressBar.setVisibility(View.VISIBLE);
+                String apiRetrogrades = "https://api.vedicastroapi.com/v3-json/panchang/retrogrades?api_key=" + API_KEY +  "&year=" + year + "&planet=Saturn&lang=en";
+                retrogrades_obj.fetchRetrogradesData(apiRetrogrades, retrogrades);
+                progressBar.setVisibility(View.GONE);
+            }
+        });
+
+        // Show the UI elements after successful retrieval
+        scrollView2.setVisibility(View.VISIBLE);
+    }
+
+
     public class ApiRequestTask extends AsyncTask<Void, Void, JSONObject> {
         private final String language = "en";
-        private final String lat = lattitude.getText().toString();
-        private final String lon = longitude.getText().toString();
-        private final String tzone = timeZone.getText().toString();
+
         @Override
         protected JSONObject doInBackground(Void... voids) {
             try {
@@ -250,12 +365,17 @@ public class HomeFragment extends Fragment {
                             "Lord: " + responseData.getJSONObject("nakshatra").getString("lord") + "\n" +
                             "Diety: " + responseData.getJSONObject("nakshatra").getString("diety");
 
-
                     nakshatra.setText(allData);
+                    if (progressBar2 != null) {
+                        progressBar2.setVisibility(View.GONE);
+                    }
 
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Toast.makeText(requireActivity(), "Error parsing JSON", Toast.LENGTH_SHORT).show();
+                    if (progressBar2 != null) {
+                        progressBar2.setVisibility(View.GONE);
+                    }
                 }
             } else {
                 Toast.makeText(requireActivity(), "Error...", Toast.LENGTH_SHORT).show();

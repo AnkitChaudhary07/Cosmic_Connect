@@ -61,7 +61,7 @@ public class GeoSearchApi {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        handleApiError("Network Error: " + error.getMessage());
+                        handleApiError("Network Error\nTry again...");
                     }
                 });
 

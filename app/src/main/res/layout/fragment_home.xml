@@ -25,6 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/sub_nav"
+            android:layout_marginTop="@dimen/_5sdp"
             android:orientation="horizontal">
 
             <ImageView
@@ -33,17 +34,18 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/alarm"/>
 
-            <ImageView
-                android:layout_weight="1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/menu"/>
+<!--            <ImageView-->
+<!--                android:layout_weight="1"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:src="@drawable/menu"/>-->
 
             <TextView
                 android:id="@+id/date"
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_7sdp"
                 android:gravity="center"
                 android:text="Date"
                 android:textColor="@color/white"
@@ -51,6 +53,7 @@
                 android:textStyle="bold" />
 
             <ImageView
+                android:id="@+id/calendar"
                 android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -200,75 +203,94 @@
 
             <TextView
                 android:id="@+id/nakshatra"
-                android:layout_width="@dimen/_130sdp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/_20sdp"
                 android:layout_below="@+id/todayPanchang_txt"
+                android:drawableRight="@drawable/current_transit_icon"
                 android:layout_marginTop="@dimen/_20sdp"
-                android:text="Nakshatra:-\n"
+                android:text="Nakshatra"
                 android:textSize="@dimen/_14sdp"
                 android:textStyle="bold"
+                android:background="@drawable/rounded_border"
+                android:textColor="@color/white"/>
+
+            <ProgressBar
+                android:id="@+id/progressBar2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:background="@drawable/coloured_rounded_border"
-                android:textColor="@color/black"/>
+                android:layout_below="@+id/nakshatra"
+                android:layout_centerHorizontal="true"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/hora"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/_20sdp"
-                android:layout_below="@+id/todayPanchang_txt"
-                android:layout_marginTop="@dimen/_20sdp"
-                android:layout_toEndOf="@id/nakshatra"
-                android:layout_marginStart="@dimen/_20sdp"
-                android:layout_marginEnd="@dimen/_20sdp"
-                android:text="Hora:-\n"
-                android:textSize="@dimen/_14sdp"
-                android:textStyle="bold"
-                android:background="@drawable/coloured_rounded_border"
-                android:textColor="@color/black"/>
-
-            <TextView
-                android:id="@+id/choghadiya"
-                android:layout_width="@dimen/_140sdp"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/_20sdp"
                 android:layout_below="@+id/nakshatra"
                 android:layout_marginTop="@dimen/_20sdp"
-                android:text="Choghadiya:-\n"
+                android:drawableRight="@drawable/baseline_remove_red_eye_24"
+                android:text="Hora"
                 android:textSize="@dimen/_14sdp"
-                android:textStyle="bold"
-                android:background="@drawable/coloured_rounded_border"
-                android:textColor="@color/black"/>
-
-
-            <TextView
-                android:id="@+id/monthly_panchang"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/_20sdp"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:layout_below="@+id/choghadiya"
-                android:text="Monthly Panchang"
-                android:drawableRight="@drawable/baseline_star_purple500_24"
-                android:textSize="@dimen/_12sdp"
                 android:textStyle="bold"
                 android:background="@drawable/rounded_border"
                 android:textColor="@color/white"/>
 
-                <TextView
+            <TextView
+                android:id="@+id/choghadiya"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_20sdp"
+                android:layout_below="@+id/hora"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:drawableRight="@drawable/baseline_report_24"
+                android:text="Choghadiya"
+                android:textSize="@dimen/_14sdp"
+                android:textStyle="bold"
+                android:background="@drawable/rounded_border"
+                android:textColor="@color/white"/>
+
+
+            <TextView
+                android:id="@+id/monthly_panchang"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_below="@+id/choghadiya"
+                android:text="Monthly Panchang"
+                android:drawableRight="@drawable/baseline_star_purple500_24"
+                android:textSize="@dimen/_15sdp"
+                android:textStyle="bold"
+                android:background="@drawable/rounded_border"
+                android:textColor="@color/white"/>
+
+            <TextView
                     android:id="@+id/retrogrades"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/_15sdp"
                     android:layout_below="@+id/monthly_panchang"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:layout_marginEnd="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_20sdp"
                     android:text="Retrogrades"
                     android:drawableRight="@drawable/baseline_tips_and_updates_24"
-                    android:textSize="@dimen/_13sdp"
+                    android:textSize="@dimen/_15sdp"
                     android:textStyle="bold"
                     android:background="@drawable/rounded_border"
                     android:textColor="@color/white"/>
+
+            <TextView
+                android:id="@+id/siuu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/retrogrades"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_20sdp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:text="Planet"/>
 
         </RelativeLayout>
 

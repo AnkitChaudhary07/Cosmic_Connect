@@ -65,7 +65,7 @@ public class Hora {
                             }
 
                             // Display the closest Hora and its time
-                            String muhuratData = "Hora: " + closestHora;
+                            String muhuratData = "\n\n" + closestHora;
                             planet = closestHora;
                             textView.setText(muhuratData);
 

@@ -1,10 +1,14 @@
 package com.example.cosmicinsights;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -57,9 +61,15 @@ public class LoginActivity extends AppCompatActivity {
                 // Show the progress bar
                 progress_bar.setVisibility(View.VISIBLE);
 
-                String email = email1.getText().toString();
-                String password = password1.getText().toString();
-                new LoginTask().execute(email, password);
+                // Check for internet connectivity
+                if (isNetworkAvailable()) {
+                    String email = email1.getText().toString();
+                    String password = password1.getText().toString();
+                    new LoginTask().execute(email, password);
+                } else {
+                    // No internet connection, display a popup
+                    showNoInternetConnectionPopup();
+                }
             }
         });
 
@@ -77,6 +87,29 @@ public class LoginActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putBoolean("isLoggedIn", status);
         editor.apply();
+    }
+
+    // Check for internet connectivity
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (connectivityManager != null) {
+            NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+            return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+        }
+        return false;
+    }
+
+    private void showNoInternetConnectionPopup() {
+        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+        alertDialog.setTitle("No Internet Connection");
+        alertDialog.setMessage("Please check your internet connection and try again.");
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        alertDialog.show();
+        progress_bar.setVisibility(View.GONE);
     }
 
 

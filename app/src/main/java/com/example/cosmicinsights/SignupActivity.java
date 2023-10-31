@@ -1,8 +1,13 @@
 package com.example.cosmicinsights;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -47,25 +52,31 @@ public class SignupActivity extends AppCompatActivity {
                 // Show the progress bar
                 progress_bar.setVisibility(View.VISIBLE);
 
-                // Get input from EditText fields
-                String name = user_name.getText().toString();
-                String email = user_email.getText().toString();
-                String password = user_password.getText().toString();
-                String confirmPassword = confirm_password.getText().toString();
+                // Check for internet connectivity
+                if (isNetworkAvailable()) {
+                    // Get input from EditText fields
+                    String name = user_name.getText().toString();
+                    String email = user_email.getText().toString();
+                    String password = user_password.getText().toString();
+                    String confirmPassword = confirm_password.getText().toString();
 
-                // Check if the passwords match
-                if (password.equals(confirmPassword) && password.length() >= 6) {
-                    // Passwords match and are at least 6 characters long
-                    // You can proceed with registration or other actions
-                    new RegistrationTask().execute(name, email, password);
+                    // Check if the passwords match
+                    if (password.equals(confirmPassword) && password.length() >= 6) {
+                        // Passwords match and are at least 6 characters long
+                        // You can proceed with registration or other actions
+                        new RegistrationTask().execute(name, email, password);
 
-                } else if (!password.equals(confirmPassword)) {
-                    // Passwords do not match, show an error message
-                    Toast.makeText(SignupActivity.this, "Passwords do not match", Toast.LENGTH_SHORT).show();
+                    } else if (!password.equals(confirmPassword)) {
+                        // Passwords do not match, show an error message
+                        Toast.makeText(SignupActivity.this, "Passwords do not match", Toast.LENGTH_SHORT).show();
 
+                    } else {
+                        // Password length is less than 6 characters, show an error message
+                        Toast.makeText(SignupActivity.this, "Password must be at least 6 characters long", Toast.LENGTH_SHORT).show();
+                    }
                 } else {
-                    // Password length is less than 6 characters, show an error message
-                    Toast.makeText(SignupActivity.this, "Password must be at least 6 characters long", Toast.LENGTH_SHORT).show();
+                    // No internet connection, display a popup
+                    showNoInternetConnectionPopup();
                 }
             }
         });
@@ -78,6 +89,29 @@ public class SignupActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    // Check for internet connectivity
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (connectivityManager != null) {
+            NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+            return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+        }
+        return false;
+    }
+
+    private void showNoInternetConnectionPopup() {
+        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+        alertDialog.setTitle("No Internet Connection");
+        alertDialog.setMessage("Please check your internet connection and try again.");
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        alertDialog.show();
+        progress_bar.setVisibility(View.GONE);
     }
 
     private class RegistrationTask extends AsyncTask<String, Void, String> {
