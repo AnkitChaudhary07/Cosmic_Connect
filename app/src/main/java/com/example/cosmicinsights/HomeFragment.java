@@ -78,7 +78,7 @@ public class HomeFragment extends Fragment {
     EditText city_name;
     ImageView live_location, search_location, calendar;
     ProgressBar progressBar, progressBar2;
-    TextView date, siuu, nakshatra, hora, choghadiya, monthly_panchang, retrogrades,lattitude, longitude, timeZone;
+    TextView date, nakshatra, hora, choghadiya, monthly_panchang, retrogrades,lattitude, longitude, timeZone;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -129,7 +129,6 @@ public class HomeFragment extends Fragment {
         choghadiya = view.findViewById(R.id.choghadiya);
         monthly_panchang = view.findViewById(R.id.monthly_panchang);
         retrogrades = view.findViewById(R.id.retrogrades);
-        siuu = view.findViewById(R.id.siuu);
 
         // Disable or hide the UI elements you want to show after entering a city
         scrollView2.setVisibility(view.GONE);
@@ -176,9 +175,6 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        String str = city_name.getText().toString().trim();
-//        if (str.isEmpty()) {
-//        }
         search_location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -190,6 +186,7 @@ public class HomeFragment extends Fragment {
                     geoSearchApi = new GeoSearchApi(requireContext());
                     //String apiGeoSearch = "https://api.vedicastroapi.com/v3-json/utilities/geo-search?city=delhi&api_key=" + API_KEY;
                     String apiGeoSearch = "https://api.vedicastroapi.com/v3-json/utilities/geo-search?city=" + city + "&api_key=" + API_KEY;
+                    geoSearchApi.setProgressBar(progressBar);
                     geoSearchApi.fetchData(apiGeoSearch, lattitude, longitude, timeZone);
 
                 // Introduce a 3-second delay using a Handler
@@ -275,7 +272,6 @@ public class HomeFragment extends Fragment {
 
 
     private void makeScrollViewVisible() {
-        progressBar.setVisibility(View.GONE);
 
         // For Nakshatra
         nakshatra.setOnClickListener(new View.OnClickListener() {
@@ -305,7 +301,6 @@ public class HomeFragment extends Fragment {
                 horaMuhurta.setProgressBar(progressBar2);
                 horaMuhurta.fetchDataAndDisplay(hora);
                 planet = horaMuhurta.getPlanet();
-                siuu.setText("Planet: " + planet);
             }
         });
 
@@ -318,7 +313,8 @@ public class HomeFragment extends Fragment {
                 lat = lattitude.getText().toString();
                 lon = longitude.getText().toString();
                 tzone = timeZone.getText().toString();
-                //String apidemo = "https://api.vedicastroapi.com/v3-json/panchang/choghadiya-muhurta?api_key=9100d2f1-d628-5866-bbfe-13507ea0bf38&date=23/10/2023&tz=5.5&lat=30.26&lon=78.10&time=05:20&lang=en";
+
+            //for testing...   //String apidemo = "https://api.vedicastroapi.com/v3-json/panchang/choghadiya-muhurta?api_key=9100d2f1-d628-5866-bbfe-13507ea0bf38&date=23/10/2023&tz=5.5&lat=30.26&lon=78.10&time=05:20&lang=en";
                 String apiChoghadiyaMuhurta = "https://api.vedicastroapi.com/v3-json/panchang/choghadiya-muhurta?api_key=" + API_KEY + "&date=" + date2 + "&tz=" + tzone + "&lat=" + lat + "&lon=" + lon + "&time=" + time + "&lang=en";
                 ChoghadiyaMuhurta choghadiyaMuhurta = new ChoghadiyaMuhurta(requireContext(), apiChoghadiyaMuhurta);
                 choghadiyaMuhurta.setProgressBar(progressBar2);
@@ -334,15 +330,13 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        //siuu.setText("Planet :" + planet);
-
         //For Retrogrades
         retrogrades_obj = new Retrogrades(requireContext());
         retrogrades.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 progressBar.setVisibility(View.VISIBLE);
-                String apiRetrogrades = "https://api.vedicastroapi.com/v3-json/panchang/retrogrades?api_key=" + API_KEY +  "&year=" + year + "&planet=" + planet + "&lang=en";
+                String apiRetrogrades = "https://api.vedicastroapi.com/v3-json/panchang/retrogrades?api_key=" + API_KEY +  "&year=" + year + "&planet=saturn" + "&lang=en";
                 retrogrades_obj.fetchRetrogradesData(apiRetrogrades, retrogrades);
                 progressBar.setVisibility(View.GONE);
             }

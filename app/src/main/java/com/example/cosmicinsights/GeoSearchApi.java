@@ -1,6 +1,8 @@
 package com.example.cosmicinsights;
 
 import android.content.Context;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +23,11 @@ public class GeoSearchApi {
     public GeoSearchApi(Context context) {
         this.context = context;
         requestQueue = Volley.newRequestQueue(context);
+    }
+    private ProgressBar progressBar;
+
+    public void setProgressBar(ProgressBar progressBar) {
+        this.progressBar = progressBar;
     }
 
     public void fetchData(String apiUrl, TextView lattitude, TextView longitude, TextView timeZone) {
@@ -49,12 +56,21 @@ public class GeoSearchApi {
                                 lattitude.setText(formattedLatitude);
                                 longitude.setText(formattedLongitude);
                                 timeZone.setText(tz);
+                                if (progressBar != null) {
+                                    progressBar.setVisibility(View.GONE);
+                                }
                             } else {
                                 handleApiError("Invalid City");
+                                if (progressBar != null) {
+                                    progressBar.setVisibility(View.GONE);
+                                }
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
                             handleApiError("Error...");
+                            if (progressBar != null) {
+                                progressBar.setVisibility(View.GONE);
+                            }
                         }
                     }
                 },
