@@ -72,7 +72,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_15sdp"
+            android:layout_marginStart="@dimen/_5sdp"
             android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/live_location"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                android:layout_marginTop="@dimen/_40sdp"
+                android:src="@drawable/baseline_my_location_24" />
 
             <EditText
                 android:id="@+id/city_name"
@@ -80,13 +89,14 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_36sdp"
-                android:layout_marginStart="@dimen/_10sdp"
                 android:padding="@dimen/_6sdp"
             android:hint="Set your location"
             android:background="@drawable/rounded_white_border"
             android:textSize="@dimen/_18ssp"
             android:textColorHint="@color/black"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+                android:inputType="text"
+                android:imeOptions="actionDone"/>
 
             <ImageView
                 android:id="@+id/search_location"
@@ -95,6 +105,7 @@
             android:layout_weight="0.3"
                 android:layout_marginTop="@dimen/_35sdp"
             android:src="@drawable/search" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -215,15 +226,6 @@
                 android:background="@drawable/rounded_border"
                 android:textColor="@color/white"/>
 
-            <ProgressBar
-                android:id="@+id/progressBar2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/coloured_rounded_border"
-                android:layout_below="@+id/nakshatra"
-                android:layout_centerHorizontal="true"
-                android:visibility="gone" />
-
             <TextView
                 android:id="@+id/hora"
                 android:layout_width="match_parent"
@@ -237,6 +239,14 @@
                 android:textStyle="bold"
                 android:background="@drawable/rounded_border"
                 android:textColor="@color/white"/>
+
+            <ProgressBar
+                android:id="@+id/progressBar2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/nakshatra"
+                android:layout_centerHorizontal="true"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/choghadiya"

@@ -1,93 +1,129 @@
 package com.example.cosmicinsights;
 
 import android.content.Context;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
 public class Hora {
-    SimpleDateFormat sdfTime = new SimpleDateFormat("hh:mm a", Locale.getDefault());
+    private RequestQueue requestQueue;
+    private String apiUrl;
+    private String planet;
     private Context context;
-    private String planet = "";
 
-    public Hora(Context context) {
+    public Hora(Context context, String apiUrl) {
         this.context = context;
+        requestQueue = Volley.newRequestQueue(context);
+        this.apiUrl = apiUrl;
     }
 
-    public void fetchData(String url, TextView textView) {
-        String time = sdfTime.format(new Date());
+    private ProgressBar progressBar2;
 
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                new Response.Listener<String>() {
+    public void setProgressBar(ProgressBar progressBar2) {
+        this.progressBar2 = progressBar2;
+    }
+
+    public String getPlanet() {
+        return planet;
+    }
+    SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss: a", Locale.getDefault());
+    String currentTime = sdf.format(new Date());
+    Date targetTime;
+
+
+    public void fetchDataAndDisplay(final TextView textView) {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, apiUrl, null,
+                new Response.Listener<JSONObject>() {
                     @Override
-                    public void onResponse(String response) {
+                    public void onResponse(JSONObject response) {
                         try {
-                            SimpleDateFormat sdf = new SimpleDateFormat("hh:mm", Locale.getDefault());
-                            Date currentTime = sdf.parse(time);
+                            if (response.getInt("status") == 200) {
+                                JSONObject responseObject = response.getJSONObject("response");
+                                JSONArray horas = responseObject.getJSONArray("horas");
 
-                            JSONObject jsonObject = new JSONObject(response);
-                            JSONObject responseData = jsonObject.getJSONObject("response");
-                            JSONArray data = responseData.getJSONArray("horas");
+                                StringBuilder horaData = new StringBuilder();
 
-                            // Initialize variables to store the closest Hora and its time
-                            String closestHora = "";
-                            Date closestStartTime = null;
-                            Date closestEndTime = null;
+                                for (int i = 0; i < horas.length(); i++) {
+                                    JSONObject hora = horas.getJSONObject(i);
+                                    String start = hora.getString("start");
+                                    String end = hora.getString("end");
 
-                            // Loop through the data to find the matching Hora
-                            for (int i = 0; i < data.length(); i++) {
-                                JSONObject item = data.getJSONObject(i);
-                                String horaData = item.getString("hora");
-                                String start = item.getString("start");
-                                String end = item.getString("end");
-                                Date startTime = sdf.parse(start);
-                                Date endTime = sdf.parse(end);
+                                    //Check if the hora falls within the target time
+                                    if (compareTime(start, end)) {
+                                        planet = hora.getString("hora");
+                                        horaData.append("Hora: ").append(hora.getString("hora")).append("\n\n");
+                                        horaData.append("Start: ").append(hora.getString("start")).append("\n");
+                                        horaData.append("End: ").append(hora.getString("end")).append("\n");
+                                        horaData.append("Benefits: ").append(hora.getString("benefits")).append("\n\n");
+                                        horaData.append("Lucky Gem: ").append(hora.getString("lucky_gem"));
 
-                                if (currentTime.after(startTime) && currentTime.before(endTime)) {
-                                    closestHora = horaData;
-                                    closestStartTime = startTime;
-                                    closestEndTime = endTime;
-                                    break; // Stop the loop once the matching time is found
+                                        textView.setText(horaData.toString());
+                                        if (progressBar2 != null) {
+                                            progressBar2.setVisibility(View.GONE);
+                                        }
+                                        break;
+                                    }
                                 }
                             }
-
-                            // Display the closest Hora and its time
-                            String muhuratData = "\n\n" + closestHora;
-                            planet = closestHora;
-                            textView.setText(muhuratData);
-
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show();
-                        } catch (java.text.ParseException e) {
-                            e.printStackTrace();
-                            Toast.makeText(context, "Time Error", Toast.LENGTH_SHORT).show();
                         }
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(context, "Network Error", Toast.LENGTH_SHORT).show();
+                        // Handle error here
                     }
                 });
 
-        Volley.newRequestQueue(context).add(stringRequest);
+        requestQueue.add(jsonObjectRequest);
     }
-    public String getPlanet() {
-        return planet;
+
+    private Boolean compareTime(String start, String end) {
+        SimpleDateFormat inputFormat = new SimpleDateFormat("EEE MMM dd yyyy h:mm:ss a", Locale.getDefault());
+        SimpleDateFormat outputFormat = new SimpleDateFormat("hh:mm:ss a", Locale.getDefault());
+
+        try {
+            // Parse the start and end times from the original format
+            Date startDate = inputFormat.parse(start);
+            Date endDate = inputFormat.parse(end);
+
+            // Format the parsed dates into the desired format
+            String formattedStartTime = outputFormat.format(startDate);
+            String formattedEndTime = outputFormat.format(endDate);
+
+            SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss a", Locale.getDefault());
+            String currentTime = sdf.format(new Date());
+
+            Date targetTime = sdf.parse(currentTime);
+            Date horaStart = sdf.parse(formattedStartTime);
+            Date horaEnd = sdf.parse(formattedEndTime);
+
+            if(targetTime.after(horaStart) && targetTime.before(horaEnd)) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

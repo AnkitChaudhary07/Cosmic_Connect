@@ -54,17 +54,19 @@ import java.util.List;
 import java.util.Locale;
 
 public class HomeFragment extends Fragment {
+
+    LocationHelper locationHelper;
     GeoSearchApi geoSearchApi;
-    ChoghadiyaMuhurta choghadiyaMuhurta;
 
     Retrogrades retrogrades_obj;
     String selectedLanguage = "en";
+    String planet;
 
     //Used in location search bar...
     int flag = 0;
     String lat = "";
     String lon = "";
-    String tzone = "";
+    String tzone = "5.5";
     private final String API_KEY = "9100d2f1-d628-5866-bbfe-13507ea0bf38";
     SimpleDateFormat sdfTime = new SimpleDateFormat("hh:mm", Locale.getDefault());
     private final String time = sdfTime.format(new Date());
@@ -74,7 +76,7 @@ public class HomeFragment extends Fragment {
     private Spinner languageSpinner;
     ScrollView scrollView2;
     EditText city_name;
-    ImageView search_location, calendar;
+    ImageView live_location, search_location, calendar;
     ProgressBar progressBar, progressBar2;
     TextView date, siuu, nakshatra, hora, choghadiya, monthly_panchang, retrogrades,lattitude, longitude, timeZone;
 
@@ -92,9 +94,16 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         AlertDialog alertDialog = new AlertDialog.Builder(requireContext()).create();
-        alertDialog.setTitle("Please enter your city \nThen press the search bar.");
+        alertDialog.setIcon(R.drawable.live_location);
+        alertDialog.setTitle("Live Location");
+        alertDialog.setMessage("Please tap this icon \nto see live location.");
+        alertDialog.setButton(androidx.appcompat.app.AlertDialog.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        alertDialog.show();
         //Paint the search icon black...
-        // alertDialog.setIcon(R.drawable.search);
 
         alertDialog.setButton("Ok", new DialogInterface.OnClickListener() {
             @Override
@@ -105,6 +114,7 @@ public class HomeFragment extends Fragment {
         scrollView2 = view.findViewById(R.id.scrollView2);
         date = view.findViewById(R.id.date);
         calendar = view.findViewById(R.id.calendar);
+        live_location = view.findViewById(R.id.live_location);
         search_location = view.findViewById(R.id.search_location);
         city_name = view.findViewById(R.id.city_name);
         lattitude = view.findViewById(R.id.lattitude);
@@ -148,11 +158,27 @@ public class HomeFragment extends Fragment {
         languageSpinner.setAdapter(adapter);
         selectedLanguage = languageSpinner.getSelectedItem().toString();
 
+        //Live Location...
+        live_location.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Live Location...
+                locationHelper = new LocationHelper(getActivity(), lattitude, longitude, progressBar, city_name);
+                locationHelper.checkAndRequestLocationPermission();
+
+                lattitude.setText(" ");
+
+                // Check if the city name has been successfully retrieved
+                if (!lattitude.getText().toString().isEmpty()) {
+                    // City name retrieved, so makeScrollViewVisible
+                    makeScrollViewVisible();
+                }
+            }
+        });
+
         String str = city_name.getText().toString().trim();
-        if (str.isEmpty()) {
-            // Show an alert to enter a city
-            alertDialog.show();
-        }
+//        if (str.isEmpty()) {
+//        }
         search_location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -266,26 +292,37 @@ public class HomeFragment extends Fragment {
         });
 
         // For Hora
-        Hora horaMuhurta = new Hora(requireContext());
         hora.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                progressBar2.setVisibility(View.VISIBLE);
                 lat = lattitude.getText().toString();
                 lon = longitude.getText().toString();
                 tzone = timeZone.getText().toString();
                // String apiHora = "https://api.vedicastroapi.com/v3-json/panchang/hora-muhurta?api_key=9100d2f1-d628-5866-bbfe-13507ea0bf38&date=11/03/1994&tz=5.5&lat=11.22&lon=77.00&time=05:20&lang=en";
                 String apiHora = "https://api.vedicastroapi.com/v3-json/panchang/hora-muhurta?api_key=" + API_KEY + "&date=" + date2 + "&tz=" + tzone + "&lat=" + lat + "&lon=" + lon + "&time=" + time + "&lang=en";
-                horaMuhurta.fetchData(apiHora, hora);
+                Hora horaMuhurta = new Hora(requireContext(), apiHora);
+                horaMuhurta.setProgressBar(progressBar2);
+                horaMuhurta.fetchDataAndDisplay(hora);
+                planet = horaMuhurta.getPlanet();
+                siuu.setText("Planet: " + planet);
             }
         });
 
         // For Choghadiya
-        choghadiyaMuhurta = new ChoghadiyaMuhurta(requireContext());
+
         choghadiya.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                progressBar2.setVisibility(View.VISIBLE);
+                lat = lattitude.getText().toString();
+                lon = longitude.getText().toString();
+                tzone = timeZone.getText().toString();
+                //String apidemo = "https://api.vedicastroapi.com/v3-json/panchang/choghadiya-muhurta?api_key=9100d2f1-d628-5866-bbfe-13507ea0bf38&date=23/10/2023&tz=5.5&lat=30.26&lon=78.10&time=05:20&lang=en";
                 String apiChoghadiyaMuhurta = "https://api.vedicastroapi.com/v3-json/panchang/choghadiya-muhurta?api_key=" + API_KEY + "&date=" + date2 + "&tz=" + tzone + "&lat=" + lat + "&lon=" + lon + "&time=" + time + "&lang=en";
-                choghadiyaMuhurta.fetchData(apiChoghadiyaMuhurta, choghadiya);
+                ChoghadiyaMuhurta choghadiyaMuhurta = new ChoghadiyaMuhurta(requireContext(), apiChoghadiyaMuhurta);
+                choghadiyaMuhurta.setProgressBar(progressBar2);
+                choghadiyaMuhurta.fetchDataAndDisplay(choghadiya);
             }
         });
 
@@ -297,9 +334,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        String planet = horaMuhurta.getPlanet();
-
-        siuu.setText(planet);
+        //siuu.setText("Planet :" + planet);
 
         //For Retrogrades
         retrogrades_obj = new Retrogrades(requireContext());
@@ -307,7 +342,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 progressBar.setVisibility(View.VISIBLE);
-                String apiRetrogrades = "https://api.vedicastroapi.com/v3-json/panchang/retrogrades?api_key=" + API_KEY +  "&year=" + year + "&planet=Saturn&lang=en";
+                String apiRetrogrades = "https://api.vedicastroapi.com/v3-json/panchang/retrogrades?api_key=" + API_KEY +  "&year=" + year + "&planet=" + planet + "&lang=en";
                 retrogrades_obj.fetchRetrogradesData(apiRetrogrades, retrogrades);
                 progressBar.setVisibility(View.GONE);
             }

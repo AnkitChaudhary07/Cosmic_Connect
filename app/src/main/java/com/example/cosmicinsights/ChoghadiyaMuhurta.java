@@ -1,91 +1,122 @@
 package com.example.cosmicinsights;
 
 import android.content.Context;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
 public class ChoghadiyaMuhurta {
-    SimpleDateFormat sdfTime = new SimpleDateFormat("hh:mm a", Locale.getDefault());
+    private RequestQueue requestQueue;
+    private String apiUrl;
     private Context context;
 
-    public ChoghadiyaMuhurta(Context context) {
+    public ChoghadiyaMuhurta(Context context, String apiUrl) {
         this.context = context;
+        requestQueue = Volley.newRequestQueue(context);
+        this.apiUrl = apiUrl;
     }
 
-    public void fetchData(String url, TextView textView) {
-        String time = sdfTime.format(new Date());
+    private ProgressBar progressBar2;
 
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                new Response.Listener<String>() {
+    public void setProgressBar(ProgressBar progressBar2) {
+        this.progressBar2 = progressBar2;
+    }
+    SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss: a", Locale.getDefault());
+    String currentTime = sdf.format(new Date());
+    Date targetTime;
+
+
+    public void fetchDataAndDisplay(final TextView textView) {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, apiUrl, null,
+                new Response.Listener<JSONObject>() {
                     @Override
-                    public void onResponse(String response) {
+                    public void onResponse(JSONObject response) {
                         try {
-                            // Parse the current time to determine if it's daytime
-                            SimpleDateFormat sdf = new SimpleDateFormat("hh:mm", Locale.getDefault());
-                            Date currentTime = sdf.parse(time);
+                            if (response.getInt("status") == 200) {
+                                JSONObject responseObject = response.getJSONObject("response");
+                                JSONArray day = responseObject.getJSONArray("day");
 
-                            JSONObject jsonObject = new JSONObject(response);
-                            JSONObject responseData = jsonObject.getJSONObject("response");
+                                StringBuilder horaData = new StringBuilder();
 
-                            // Choose the appropriate data based on time
-                            JSONArray data = responseData.getJSONArray("day");
+                                for (int i = 0; i < day.length(); i++) {
+                                    JSONObject muhurta = day.getJSONObject(i);
+                                    String start = muhurta.getString("start");
+                                    String end = muhurta.getString("end");
 
-                            // Initialize variables to store the closest muhurat and its time
-                            String closestMuhurat = "";
-                            Date closestStartTime = null;
-                            Date closestEndTime = null;
+                                    //Check if the hora falls within the target time
+                                    if (compareTime(start, end)) {
+                                        horaData.append("Start: ").append(muhurta.getString("start")).append("\n");
+                                        horaData.append("End: ").append(muhurta.getString("end")).append("\n\n");
+                                        horaData.append("Benefits: ").append(muhurta.getString("muhurat")).append("\n\n");
+                                        horaData.append("Lucky Gem: ").append(muhurta.getString("type"));
 
-                            // Loop through the data to find the matching time
-                            for (int i = 0; i < data.length(); i++) {
-                                JSONObject item = data.getJSONObject(i);
-                                String muhurat = item.getString("muhurat");
-                                String start = item.getString("start");
-                                String end = item.getString("end");
-                                Date startTime = sdf.parse(start);
-                                Date endTime = sdf.parse(end);
-
-                                if (currentTime.after(startTime) && currentTime.before(endTime)) {
-                                    closestMuhurat = muhurat;
-                                    closestStartTime = startTime;
-                                    closestEndTime = endTime;
-                                    break; // Stop the loop once the matching time is found
+                                        textView.setText(horaData.toString());
+                                        if (progressBar2 != null) {
+                                            progressBar2.setVisibility(View.GONE);
+                                        }
+                                        break;
+                                    }
                                 }
                             }
-
-                            // Display the closest muhurat and its time in the provided TextView
-                            String muhuratData = "Chogadiya:-\n\n" + "Muhurat: " + closestMuhurat;
-                            textView.setText(muhuratData);
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show();
-                        } catch (java.text.ParseException e) {
-                            e.printStackTrace();
-                            Toast.makeText(context, "Time Error", Toast.LENGTH_SHORT).show();
                         }
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        // Handle network errors
-                        Toast.makeText(context, "Network Error", Toast.LENGTH_SHORT).show();
+                        // Handle error here
                     }
                 });
 
-        Volley.newRequestQueue(context).add(stringRequest);
+        requestQueue.add(jsonObjectRequest);
+    }
+
+    private Boolean compareTime(String start, String end) {
+        SimpleDateFormat inputFormat = new SimpleDateFormat("EEE MMM dd yyyy h:mm:ss a", Locale.getDefault());
+        SimpleDateFormat outputFormat = new SimpleDateFormat("hh:mm:ss a", Locale.getDefault());
+
+        try {
+            // Parse the start and end times from the original format
+            Date startDate = inputFormat.parse(start);
+            Date endDate = inputFormat.parse(end);
+
+            // Format the parsed dates into the desired format
+            String formattedStartTime = outputFormat.format(startDate);
+            String formattedEndTime = outputFormat.format(endDate);
+
+            SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss a", Locale.getDefault());
+            String currentTime = sdf.format(new Date());
+
+            Date targetTime = sdf.parse(currentTime);
+            Date horaStart = sdf.parse(formattedStartTime);
+            Date horaEnd = sdf.parse(formattedEndTime);
+
+            if(targetTime.after(horaStart) && targetTime.before(horaEnd)) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
